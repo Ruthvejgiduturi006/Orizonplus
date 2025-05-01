@@ -1,0 +1,293 @@
+/* Main container */
+.browse-jobs-container {
+  padding: 2rem;
+  position: relative;
+  min-height: 100vh;
+  background: #f2f8ff;
+}
+
+/* Fancy background blob */
+.background-shape {
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #80d0c7, #0093e9);
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  z-index: 0;
+}
+
+/* Title */
+.browse-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  position: relative;
+  z-index: 1;
+}
+
+/* Filters */
+.filters-section {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.filter-input, .filter-select {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 220px;
+  background: white;
+}
+
+/* Map Button */
+.map-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  z-index: 1;
+  position: relative;
+}
+
+.view-map-btn {
+  background-color: #0093e9;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.view-map-btn:hover {
+  background-color: #0077c8;
+}
+
+/* Job cards wrapper */
+.job-cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Each Job Card */
+.job-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.job-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.job-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.company-name {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Card Body */
+.job-card-body p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+/* Footer Apply Button */
+.job-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.apply-btn {
+  background-color: #00c853;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.3rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.apply-btn:hover {
+  background-color: #00a145;
+}
+
+/* Modal Common */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.modal-box.large-map {
+  max-width: 800px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.modal-btn {
+  background-color: #0077c8;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modal-btn.cancel {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal-btn:hover {
+  opacity: 0.9;
+}
+
+.user-details {
+  text-align: left;
+  margin: 1rem 0;
+}
+
+/* Link Back to Dashboard */
+.back-home {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #0077c8;
+  text-decoration: none;
+
+}
+
+.back-home:hover {
+  text-decoration: underline;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.5rem;
+}
+
+/* No jobs message */
+.no-jobs-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .filters-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .job-cards-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+}
+
+.spinner {
+  border: 4px solid rgba(0,0,0,0.1);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border-left-color: #4f46e5; /* Indigo color */
+  animation: spin 1s ease infinite;
+  margin-bottom: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.browse-jobs-container {
+  padding: 20px;
+  position: relative;
+}
+
+.modal-box.large-map {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.map-button-container {
+  margin-bottom: 20px;
+}
+
+.view-map-btn {
+  padding: 10px 20px;
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.view-map-btn:hover {
+  background-color: #3730a3;
+}

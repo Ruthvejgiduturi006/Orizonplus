@@ -1,0 +1,219 @@
+/* Signup.css */
+.signup-container {
+  background: linear-gradient(135deg, #4982eb 20%, #fff 80%);
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.signup-card {
+  display: flex;
+  width: 80%;
+  max-width: 1000px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Left Panel (Text Section) */
+.left-panel {
+  flex: 1;
+  background: #fff;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 40px;
+}
+
+.left-panel h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #00695c; /* Darker teal for heading */
+}
+
+.left-panel p {
+  font-size: 16px;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  color: #26a69a; /* Medium teal for paragraph */
+}
+
+/* Right Panel (Form) */
+.right-panel {
+  flex: 1;
+  padding: 60px 40px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.signup-form h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+
+}
+
+.signup-form label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #444;
+  font-weight: bold;
+}
+
+.signup-form input {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+
+}
+
+.signup-form select {
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.signup-btn {
+  padding: 12px;
+  background-color: #6c63ff; /* Purple button */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.signup-btn:hover {
+  background-color: #512da8; /* Darker purple on hover */
+}
+
+.signup-link {
+  color: #6c63ff;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Floating Decorative Circles */
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.blue-circle {
+  top: -100px;
+  left: -100px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle at center, #1e88e5, #0d47a1); /* Blue gradient */
+}
+
+.orange-circle {
+  bottom: -100px;
+  right: -100px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle at center, #ffb74d, #f57c00); /* Orange gradient */
+}
+
+/* Back to Home Button */
+.back-home {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+
+.back-home:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+
+.bubbles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.bubbles .bubble {
+  position: absolute;
+  bottom: -100px;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: floatUp 15s infinite;
+  animation-delay: calc(-1s * var(--i));
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+}
+.back-home {
+    position: absolute;
+    top: 20px;
+    right: 20px; /* Move to right */
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 8px;
+    z-index: 1000;
+    transition: background 0.3s ease;
+  }
+  
+  .back-home:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .ghost-btn {
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 12px;
+    background-color: #6c63ff; /* Purple button */;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }

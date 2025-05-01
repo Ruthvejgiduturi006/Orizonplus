@@ -1,0 +1,182 @@
+/* General Styles */
+.onboard-page {
+  background: linear-gradient(135deg, #4982eb 20%, #fff 80%);
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center vertically */
+
+}
+.header {
+  margin-bottom: 30px;
+  color: #03086d;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.onboard-image {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+
+h1 {
+  font-size: 2rem;
+}
+.progress-bar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  max-width: 600px;
+  margin-bottom: 40px;
+  z-index: 1;
+}
+
+.progress-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  width: 100%;
+  background-color: #ccc;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.progress-line-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 4px;
+  background-color: #4c8bfc;
+  transform: translateY(-50%);
+  z-index: 0;
+  transition: width 0.4s ease;
+}
+
+.progress-step {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.progress-step.completed {
+  background-color: #4c8bfc;
+  border-color: #4c8bfc;
+  color: white;
+}
+
+
+.step-icon i {
+  font-size: 20px;
+}
+
+.step-icon span {
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.content {
+  width: 80%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Align form in the center */
+  justify-content: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+input, select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px;
+  background-color: #4c8bfc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+}
+
+button[type="submit"] {
+  background-color: #28a745;
+}
+
+.back-hhome {
+  position: absolute;
+  top: 20px;
+  right: 20px; /* Move to right */
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 1000;
+  transition: background 0.3s ease;
+}
+
+.back-hhome:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+  .blue-circle {
+    top: -100px;
+    left: -100px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle at center, #167fff, #0047AB);
+  }
+  
+  .orange-circle {
+    bottom: -100px;
+    right: -100px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle at center, #ff855f, #ff9800);
+  }
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .button-group button {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 16px;
+  }
+  

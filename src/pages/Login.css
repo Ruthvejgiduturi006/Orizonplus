@@ -1,0 +1,201 @@
+/* Background */
+.login-container {
+  background: linear-gradient(135deg, #4982eb 20%, #fff 80%);
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+
+}
+/* Page Background */
+.login-page {
+  background-color: #c8b6ff;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Login Card */
+.login-card {
+  display: flex;
+  width: 80%;
+  max-width: 1000px;
+  background: #fff;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Left Panel (Form) */
+.left-panel {
+  flex: 1;
+  padding: 60px 40px;
+}
+
+.left-panel h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.left-panel p {
+  font-size: 14px;
+  margin: 10px 0 30px;
+  color: #555;
+  text-align: center;
+}
+
+.signup-link {
+  color: #6c63ff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.left-panel form {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-panel label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.left-panel input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.options label {
+  font-size: 12px;
+}
+
+.forgot-password {
+  font-size: 12px;
+  color: #6c63ff;
+  cursor: pointer;
+}
+
+/* Buttons */
+.login-btn {
+  padding: 12px;
+  border: none;
+  background: #6c63ff;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 20px;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background: #5a54d2;
+}
+
+/* Divider */
+.divider {
+  text-align: center;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+/* Social Login Buttons */
+.social-login {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.google-btn, .facebook-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #1768af;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.google-btn:hover {
+  background: #075cef;
+}
+
+.facebook-btn:hover {
+  background: #075cef;
+}
+.right-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.right-panel img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain; /* Important: Makes the GIF scale properly */
+}
+  /* Floating Decorative Circles */
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  
+  .blue-circle {
+    top: -100px;
+    left: -100px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle at center, #167fff, #0047AB);
+  }
+  
+  .orange-circle {
+    bottom: -100px;
+    right: -100px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle at center, #ff855f, #ff9800);
+  }.back-home {
+    position: absolute;
+    top: 20px;
+    right: 20px; /* Move to right */
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 8px;
+    z-index: 1000;
+    transition: background 0.3s ease;
+  }
+  
+  .back-home:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  

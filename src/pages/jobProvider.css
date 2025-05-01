@@ -1,0 +1,125 @@
+/* Background and page layout */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+    position: relative;
+    background: linear-gradient(135deg, #4982eb 20%, #fff 80%);
+
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  /* Glass-style card container */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 30px 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
+    margin: auto;
+    overflow-y: auto;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Title */
+  .glass-card h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #03045e;
+    font-weight: bold;
+  }
+  
+  /* Form group spacing */
+  .glass-card .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Labels */
+  .glass-card label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #03045e;
+  }
+  
+  /* Inputs and select */
+  .glass-card input,
+  .glass-card select,
+  .glass-card textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.8);
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .glass-card input:focus,
+  .glass-card select:focus,
+  .glass-card textarea:focus {
+    border-color: #0077b6;
+  }
+  
+  /* Submit button */
+  .glass-card button[type="submit"] {
+    background-color: #0077b6;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .glass-card button[type="submit"]:hover {
+    background-color: #023e8a;
+  }
+  
+  /* Responsive for smaller heights */
+  @media (max-height: 700px) {
+    .glass-card {
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    .glass-card {
+      padding: 20px;
+      border-radius: 15px;
+    }
+  
+    .glass-card h2 {
+      font-size: 22px;
+    }
+  }
+  .back-hhome {
+    position: absolute;
+    top: 20px;
+    right: 20px; /* Move to right */
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 12px;
+    border-radius: 8px;
+    z-index: 1000;
+    transition: background 0.3s ease;
+  }
+  
+  .back-hhome:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
