@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiLogOut } from 'react-icons/fi';
+import { FiUser, FiLogOut,FiMessageCircle } from 'react-icons/fi';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -176,7 +176,7 @@ const Dashboard = () => {
         </div>
         <nav className="top-menu">
           <button onClick={() => setActiveSection('home')}>Home</button>
-          <button onClick={() => setActiveSection('messages')}>Messages</button>
+          <button onClick={() => setActiveSection('messages')}><FiMessageCircle className="icon" /> Messages</button>
           <button onClick={() => setActiveSection('help')}>Help</button>
         </nav>
         <div className="right">

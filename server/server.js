@@ -6,7 +6,7 @@ const authRoutes = require('./routes/auth');
 const jobSeekerRoutes = require('./routes/jobSeekerRoutes');
 const jobProviderRoutes = require('./routes/jobProviderRoutes'); // ✅ NEW
 const jobRoutes = require('./routes/job');
-
+const findJobsRoute = require('./routes/findjob');
 
 const app = express();
 const PORT = 5000;
@@ -19,6 +19,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/jobSeeker', jobSeekerRoutes);
 app.use('/api/jobProvider', jobProviderRoutes); // ✅ NEW
 app.use('/api/job', jobRoutes); // ✅ Now /api/job/browse will work!
+app.use('/api/findjobs', findJobsRoute);
+
 
 // DB Connection
 mongoose.connect('mongodb://127.0.0.1:27017/orizonplus', {

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Confirmation</title>
+  <style>
+    /* [Insert your provided CSS styles here] */
+  </style>
+</head>
+<body class="login-page">
+
+  <div class="circle blue-circle"></div>
+  <div class="circle orange-circle"></div>
+
+  <div class="glass-card dashboard-card">
+    <div class="dashboard-header">
+      <div class="dashboard-user-info">
+        <span class="icon">👤</span> <span id="seekerName"></span>
+      </div>
+      <div class="dashboard-actions">
+        <span class="icon">🔔</span>
+        <span class="icon logout-icon">🚪</span>
+      </div>
+    </div>
+
+    <h2 class="text-center">🎉 Application Submitted</h2>
+
+    <div class="info-box">
+      This is a fixed price job. No bargaining is allowed. Below is your proof letter.
+    </div>
+
+    <div class="letter">
+      <div class="stamp"></div>
+      <p><strong>Date:</strong> <span id="currentDate"></span></p>
+      <p><strong>To:</strong> <span id="providerName"></span> (Job Provider)</p>
+      <p><strong>From:</strong> <span id="seekerName2"></span> (Job Seeker)</p>
+
+      <p>Dear <span id="providerName2"></span>,</p>
+      <p>
+        I, <strong><span id="seekerName3"></span></strong>, am applying for the part-time job titled <strong>“<span id="jobTitle"></span>”</strong>. I agree to the fixed payment of <strong>₹<span id="jobPayment"></span></strong> for the entire task, without any scope for negotiation or bargaining.
+      </p>
+      <p>
+        This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.
+      </p>
+      <p>Thank you for the opportunity.</p>
+
+      <p>
+        Regards,<br>
+        <strong><span id="seekerName4"></span></strong><br>
+        Phone: <span id="seekerPhone"></span><br>
+        Location: <span id="seekerLocation"></span>
+      </p>
+    </div>
+
+    <div class="role-buttons-2col">
+      <button class="role-btn" onclick="window.location.href='browse-jobs.html'">
+        ← Back to Jobs<br><span>Return to job listings</span>
+      </button>
+      <button class="role-btn" onclick="window.print()">
+        🖨 Print Proof<br><span>Download/Print this letter</span>
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // Background gradient follows the cursor
+    document.addEventListener("mousemove", function (e) {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      document.body.style.setProperty('--x', `${x}%`);
+      document.body.style.setProperty('--y', `${y}%`);
+    });
+
+    // Populate dynamic content
+    const seeker = JSON.parse(localStorage.getItem('user'));
+    const jobDetails = JSON.parse(localStorage.getItem('selectedJob'));
+
+    const currentDate = new Date().toLocaleDateString('en-IN', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    });
+
+    document.getElementById('currentDate').textContent = currentDate;
+    document.getElementById('seekerName').textContent = seeker?.name || 'Your Name';
+    document.getElementById('seekerName2').textContent = seeker?.name || 'Your Name';
+    document.getElementById('seekerName3').textContent = seeker?.name || 'Your Name';
+    document.getElementById('seekerName4').textContent = seeker?.name || 'Your Name';
+    document.getElementById('seekerPhone').textContent = seeker?.phone || 'Your Phone';
+    document.getElementById('seekerLocation').textContent = seeker?.location || 'Your Location';
+    document.getElementById('providerName').textContent = jobDetails?.providerName || 'Job Provider';
+    document.getElementById('providerName2').textContent = jobDetails?.providerName || 'Job Provider';
+    document.getElementById('jobTitle').textContent = jobDetails?.title || 'Job Title';
+    document.getElementById('jobPayment').textContent = jobDetails?.payment || 'N/A';
+  </script>
+
+</body>
+</html>
