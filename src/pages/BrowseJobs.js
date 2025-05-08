@@ -204,17 +204,27 @@ const BrowseJobs = () => {
   
       // Prepare the application letter
       const applicationLetter = `
-        <div class="glass-card" style="padding: 20px; font-family: Arial; background: #f9f9f9; border-radius: 10px; max-width: 750px; margin: auto;">
-          <h2 style="text-align: center;">🎉 Application Submitted</h2>
-          <div class="info-box">
+      <div style="position: relative; min-height: 100vh; background: linear-gradient(135deg, #4982eb 25%, #fff 75%); font-family: 'Segoe UI', sans-serif;">
+        <!-- Decorative Circles -->
+        <div style="position: absolute; top: -60px; left: -60px; width: 200px; height: 200px; background: #4db8ff; border-radius: 50%; opacity: 0.3;"></div>
+        <div style="position: absolute; bottom: -40px; right: -40px; width: 150px; height: 150px; background: #f8a531; border-radius: 50%; opacity: 0.3;"></div>
+    
+        <!-- Back to Dashboard Link -->
+        <a href="/dashboard" style="position: absolute; top: 20px; left: 20px; text-decoration: none; font-weight: bold; color: #333;">← Back to Dashboard</a>
+    
+        <!-- Application Letter Card -->
+        <div style="padding: 20px; background: white; border-radius: 15px; max-width: 750px; margin: 100px auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <img src="https://orizonplus.onrender.com/logo.png" alt="Orizon+" style="display: block; margin: 0 auto 20px; max-height: 60px;" />
+          <h2 style="text-align: center; color: #333;">🎉 Application Submitted</h2>
+          <p style="text-align: center; font-size: 14px; color: #666;">
             This is a fixed price job. No bargaining is allowed. Below is your proof letter.
-          </div>
-  
-          <div class="letter">
+          </p>
+    
+          <div style="margin-top: 20px;">
             <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
             <p><strong>To:</strong> ${jobProvider.name || 'N/A'} (Job Provider)</p>
             <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
-  
+    
             <p>Dear ${jobProvider.name || 'Sir/Madam'},</p>
             <p>
               I, <strong>${seeker.name}</strong>, am applying for the part-time job titled <strong>“${selectedJob.jobTitle}”</strong>.
@@ -227,7 +237,7 @@ const BrowseJobs = () => {
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
             <p>Thank you for the opportunity.</p>
-  
+    
             <p>
               Regards,<br>
               <strong>${seeker.name}</strong><br>
@@ -235,13 +245,13 @@ const BrowseJobs = () => {
               Location: ${seeker.address || 'N/A'}
             </p>
           </div>
-  
-          <div style="display: flex; gap: 10px; margin-top: 30px;">
-            <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
+    
+          <div style="display: flex; justify-content: center; margin-top: 30px;">
+            <button onclick="window.print()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 16px;">🖨 Print Proof</button>
           </div>
-  
         </div>
-      `;
+      </div>
+    `;    
   
       // Show the letter and redirect after 3 seconds
       document.body.innerHTML = applicationLetter;

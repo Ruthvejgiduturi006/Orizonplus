@@ -13,6 +13,7 @@ const Login = () => {
     e.preventDefault();
     try {
       await login({ email, password });
+      alert('Login successful!'); // ✅ success message
       navigate('/dashboard');
     } catch (err) {
       alert('Invalid credentials');
