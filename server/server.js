@@ -9,6 +9,7 @@ const jobProviderRoutes = require('./routes/jobProviderRoutes');
 const jobRoutes = require('./routes/job');
 const findJobsRoute = require('./routes/findjob');
 const applyRoute = require('./routes/apply'); // <-- Add this
+const jobProviderRoute = require('./routes/jobprivder');
 
 
 const app = express();
@@ -30,7 +31,7 @@ app.use('/api/jobProvider', jobProviderRoutes);
 app.use('/api/job', jobRoutes);
 app.use('/api/findjobs', findJobsRoute);
 app.use('/api/apply', applyRoute); // <-- Add this
-
+app.use('/api/jobProvide', jobProviderRoute);
 
 // ✅ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {

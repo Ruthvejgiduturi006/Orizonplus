@@ -194,7 +194,7 @@ const BrowseJobs = () => {
       }
   
       // Fetch job provider details
-      const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.userId}`);
+      const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvide/${selectedJob.userId}`);
   
       if (!providerRes.ok) {
         throw new Error(`Failed to fetch job provider. Status: ${providerRes.status}`);
