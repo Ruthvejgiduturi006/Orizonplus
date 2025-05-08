@@ -211,7 +211,7 @@ const BrowseJobs = () => {
             <p>
               The job is provided by <strong>${jobProvider.name}</strong>, who can be contacted at
               <strong>${jobProvider.phone || 'N/A'}</strong> and is located in
-              <strong>${jobProvider.location || 'N/A'}</strong>.
+              <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
             <p>Thank you for the Opportunity.</p>
