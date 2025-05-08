@@ -188,13 +188,13 @@ const BrowseJobs = () => {
       console.log('Selected Job:', selectedJob);
   
       // Validation
-      if (!selectedJob || !selectedJob.providerId) {
+      if (!selectedJob || !selectedJob.userId) {
         alert("Invalid or missing job selection.");
         return;
       }
   
       // Fetch job provider details
-      const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.providerId}`);
+      const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.userId}`);
   
       if (!providerRes.ok) {
         throw new Error(`Failed to fetch job provider. Status: ${providerRes.status}`);
