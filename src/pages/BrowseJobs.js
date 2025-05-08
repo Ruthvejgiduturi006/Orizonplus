@@ -179,6 +179,7 @@ const BrowseJobs = () => {
 
   const handleSubmitApplication = async (userDetails) => {
     try {
+      // Retrieve the logged-in job seeker and selected job details
       const seeker = JSON.parse(localStorage.getItem('user'));
       const selectedJob = JSON.parse(localStorage.getItem('selectedJob'));
   
@@ -187,42 +188,43 @@ const BrowseJobs = () => {
         return;
       }
   
-      // Fetch actual job provider details (if not already stored)
+      // Fetch actual job provider details if not already available
       let jobProvider = selectedJob.providerDetails;
       if (!jobProvider || !jobProvider.name) {
         const response = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.providerId}`);
-         jobProvider = await response.json();
+        jobProvider = await response.json();
       }
   
       // Log application notification
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
         type: 'application',
-        jobTitle: selectedJob.title,
+        jobTitle: selectedJob.jobTitle,
         from: seeker.name,
         date: new Date().toISOString(),
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // Minimal application proof letter
+      // Generate the minimal application proof letter
       const applicationLetter = `
         <div style="padding: 20px; font-family: Arial, sans-serif; max-width: 700px; margin: auto; background: #f9f9f9; border-radius: 10px;">
           <h2 style="text-align: center; color: #007bff;">🎯 Job Application Confirmation</h2>
-          <p><strong>Job Title:</strong> ${selectedJob.title}</p>
-          <p><strong>Payment:</strong> ₹${selectedJob.payment}</p>
+          <p><strong>Job Title:</strong> ${selectedJob.jobTitle}</p>
+          <p><strong>Payment:</strong> ₹${selectedJob.payDetails}</p>
           <p><strong>Job ID:</strong> ${selectedJob._id || 'N/A'}</p>
           <hr />
           <p><strong>Job Seeker:</strong> ${seeker.name} (${seeker.phone})</p>
           <p><strong>Job Provider:</strong> ${jobProvider.name || 'N/A'} (${jobProvider.phone || 'N/A'})</p>
           <hr />
-          <p>This letter serves as an official confirmation that <strong>${seeker.name}</strong> has applied for the job "<strong>${selectedJob.title}</strong>" and agrees to the listed payment terms.</p>
+          <p>This letter serves as an official confirmation that <strong>${seeker.name}</strong> has applied for the job "<strong>${selectedJob.jobTitle}</strong>" and agrees to the listed payment terms.</p>
           <div style="margin-top: 30px; display: flex; gap: 10px;">
-            <button onclick="window.location.href='browsejobs.html'" style="flex: 1; background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px;">← Back to Jobs</button>
+            <button onclick="window.location.href='https://orizonplus.netlify.app/BrowseJobs'" style="flex: 1; background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px;">← Back to Jobs</button>
             <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
         </div>
       `;
   
+      // Replace the page content with the application proof letter
       document.body.innerHTML = applicationLetter;
   
     } catch (err) {
