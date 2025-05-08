@@ -180,17 +180,29 @@ const BrowseJobs = () => {
   };
   const handleSubmitApplication = async () => {
     try {
+      // Get seeker and selected job data from localStorage
       const seeker = JSON.parse(localStorage.getItem('user'));
       const selectedJob = JSON.parse(localStorage.getItem('selectedJob'));
   
-      if (!selectedJob) {
-        alert("No job selected.");
+      // Debug logs
+      console.log('Selected Job:', selectedJob);
+  
+      // Validation
+      if (!selectedJob || !selectedJob.providerId) {
+        alert("Invalid or missing job selection.");
         return;
       }
   
+      // Fetch job provider details
       const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.providerId}`);
+  
+      if (!providerRes.ok) {
+        throw new Error(`Failed to fetch job provider. Status: ${providerRes.status}`);
+      }
+  
       const jobProvider = await providerRes.json();
   
+      // Prepare the application letter
       const applicationLetter = `
         <div class="glass-card" style="padding: 20px; font-family: Arial; background: #f9f9f9; border-radius: 10px; max-width: 750px; margin: auto;">
           <h2 style="text-align: center;">🎉 Application Submitted</h2>
@@ -214,7 +226,7 @@ const BrowseJobs = () => {
               <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
-            <p>Thank you for the Opportunity.</p>
+            <p>Thank you for the opportunity.</p>
   
             <p>
               Regards,<br>
@@ -228,18 +240,19 @@ const BrowseJobs = () => {
             <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
   
-          <p style="text-align: center; margin-top: 20px;">You will be redirected to job listings in 3 seconds...</p>
         </div>
       `;
   
-      // Replace content temporarily
+      // Show the letter and redirect after 3 seconds
       document.body.innerHTML = applicationLetter;
   
+  
     } catch (err) {
-      console.error(err);
+      console.error("Application failed:", err);
       alert("Application failed. Please try again.");
     }
-  };  
+  };
+  
   
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
