@@ -1,7 +1,7 @@
 // services/authService.js
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const API_BASE = process.env.REACT_APP_API_URL;
 
 export const signup = async (userData) => {
   const res = await axios.post(`${API_BASE}/auth/signup`, userData);
