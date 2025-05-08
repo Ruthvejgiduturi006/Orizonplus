@@ -173,7 +173,9 @@ const BrowseJobs = () => {
   }, []);
 
   const handleApply = (job, userId) => {
-    setSelectedJob({ ...job, userId });
+    const jobWithUser = { ...job, userId };
+    setSelectedJob(jobWithUser);
+    localStorage.setItem('selectedJob', JSON.stringify(jobWithUser)); // 🔥 Important
     setModalOpen(true);
   };
 
