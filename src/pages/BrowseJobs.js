@@ -177,27 +177,24 @@ const BrowseJobs = () => {
     setModalOpen(true);
   };
 
-  const handleSubmitApplication = (userDetails) => {
+  const handleSubmitApplication = async (userDetails) => {
     try {
-      // Retrieve seeker and selected job data from localStorage
       const seeker = JSON.parse(localStorage.getItem('user'));
       const selectedJob = JSON.parse(localStorage.getItem('selectedJob'));
   
-      // Ensure selected job exists
       if (!selectedJob) {
         alert("No job selected. Please choose a job before applying.");
         return;
       }
   
-      // Retrieve provider details from selected job
-      const jobProvider = selectedJob.providerDetails || {};
+      // Fetch actual job provider details (if not already stored)
+      let jobProvider = selectedJob.providerDetails;
+      if (!jobProvider || !jobProvider.name) {
+        const response = await fetch(`/api/jobProvider/${selectedJob.providerId}`);
+        jobProvider = await response.json();
+      }
   
-      // Save the selected job in localStorage
-      localStorage.setItem('selectedJob', JSON.stringify(selectedJob));
-  
-      alert('Application sent successfully!');
-  
-      // Simulate notification to provider (internal/local)
+      // Log application notification
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
         type: 'application',
@@ -207,73 +204,21 @@ const BrowseJobs = () => {
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // Application Letter HTML with provider details and "Back to Jobs" button linking to BrowseJobs
+      // Minimal application proof letter
       const applicationLetter = `
-        <h2 class="text-center">🎉 Application Submitted</h2>
-        <div class="info-box">
-          This is a fixed price job. No bargaining is allowed. Below is your proof letter.
-        </div>
-        <div class="letter">
-          <div class="stamp"></div>
-          <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-          <p><strong>To:</strong> Mr. ${jobProvider.name || 'Job Provider'} (Job Provider)</p>
-          <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
-  
-          <p>Dear Mr. ${jobProvider.name || 'Job Provider'},</p>
-          <p>
-            I, <strong>${seeker.name}</strong>, am applying for the part-time job titled 
-            <strong>“${selectedJob.title}”</strong>. I agree to the fixed payment of 
-            <strong>₹${selectedJob.payment}</strong> for the entire task, without any scope for negotiation or bargaining.
-          </p>
-          <p>
-            This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.
-          </p>
-          <p>Thank you for the opportunity.</p>
-  
-          <p><strong>Job Details:</strong></p>
-          <ul>
-            <li><strong>Job Icon:</strong> <img src="${selectedJob.icon || 'default_icon.png'}" alt="Job Icon" style="width: 40px; height: 40px;" /></li>
-            <li><strong>Job Title:</strong> ${selectedJob.title}</li>
-            <li><strong>Location:</strong> ${selectedJob.location}</li>
-            <li><strong>Shift:</strong> ${selectedJob.shift}</li>
-            <li><strong>Last Date:</strong> ${selectedJob.lastDate}</li>
-            <li><strong>Pay:</strong> ₹${selectedJob.pay}/Day</li>
-            <li><strong>Description:</strong> ${selectedJob.description}</li>
-            <li><strong>Working Days:</strong> ${selectedJob.workingDays}</li>
-            <li><strong>Timings & Duration:</strong> ${selectedJob.timings}</li>
-            <li><strong>Contact:</strong> ${selectedJob.contact}</li>
-            <li><strong>Openings:</strong> ${selectedJob.openings}</li>
-          </ul>
-  
-          <p><strong>Job Provider Details:</strong></p>
-          <ul>
-            <li><strong>Name:</strong> ${jobProvider.name || 'Not Available'}</li>
-            <li><strong>Email:</strong> ${jobProvider.email || 'Not Available'}</li>
-            <li><strong>Phone:</strong> ${jobProvider.phone || 'Not Available'}</li>
-            <li><strong>Location:</strong> ${jobProvider.location || 'Not Available'}</li>
-            <li><strong>Gender:</strong> ${jobProvider.gender || 'Not Available'}</li>
-            <li><strong>DOB:</strong> ${jobProvider.dob || 'Not Available'}</li>
-            <li><strong>Languages:</strong> ${jobProvider.languages || 'Not Available'}</li>
-          </ul>
-  
-          <p><strong>Job Seeker Details:</strong></p>
-          <ul>
-            <li><strong>Name:</strong> ${seeker.name || 'Not Available'}</li>
-            <li><strong>Email:</strong> ${seeker.email || 'Not Available'}</li>
-            <li><strong>Phone:</strong> ${seeker.phone || 'Not Available'}</li>
-            <li><strong>Location:</strong> ${seeker.location || 'Not Available'}</li>
-            <li><strong>Gender:</strong> ${seeker.gender || 'Not Available'}</li>
-            <li><strong>DOB:</strong> ${seeker.dob || 'Not Available'}</li>
-            <li><strong>Languages:</strong> ${seeker.languages || 'Not Available'}</li>
-          </ul>
-  
-          <div class="role-buttons-2col">
-            <button class="role-btn" onclick="window.location.href = 'browsejobs.html'">
-              ← Back to Jobs<br /><span>Return to job listings</span>
-            </button>
-            <button class="role-btn" onclick="window.print()">
-              🖨 Print Proof<br><span>Download/Print this letter</span>
-            </button>
+        <div style="padding: 20px; font-family: Arial, sans-serif; max-width: 700px; margin: auto; background: #f9f9f9; border-radius: 10px;">
+          <h2 style="text-align: center; color: #007bff;">🎯 Job Application Confirmation</h2>
+          <p><strong>Job Title:</strong> ${selectedJob.title}</p>
+          <p><strong>Payment:</strong> ₹${selectedJob.payment}</p>
+          <p><strong>Job ID:</strong> ${selectedJob._id || 'N/A'}</p>
+          <hr />
+          <p><strong>Job Seeker:</strong> ${seeker.name} (${seeker.phone})</p>
+          <p><strong>Job Provider:</strong> ${jobProvider.name || 'N/A'} (${jobProvider.phone || 'N/A'})</p>
+          <hr />
+          <p>This letter serves as an official confirmation that <strong>${seeker.name}</strong> has applied for the job "<strong>${selectedJob.title}</strong>" and agrees to the listed payment terms.</p>
+          <div style="margin-top: 30px; display: flex; gap: 10px;">
+            <button onclick="window.location.href='browsejobs.html'" style="flex: 1; background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px;">← Back to Jobs</button>
+            <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
         </div>
       `;
@@ -378,14 +323,11 @@ const BrowseJobs = () => {
           }
         </style>
       `;
-  
-      // Insert the styles and application letter HTML into the page
-      document.head.insertAdjacentHTML('beforeend', styles);
-      document.body.innerHTML = applicationLetter;
-  
+        document.body.innerHTML = applicationLetter;
+
     } catch (err) {
       console.error(err);
-      alert('Application failed. Try again.');
+      alert("Application failed. Please try again.");
     }
   };
   
