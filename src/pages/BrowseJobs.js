@@ -211,7 +211,7 @@ const BrowseJobs = () => {
             <p>
               The job is provided by <strong>${jobProvider.name}</strong>, who can be contacted at
               <strong>${jobProvider.phone || 'N/A'}</strong> and is located in
-              <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
+              <strong>${jobProvider.location || 'N/A'}</strong>.
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
             <p>Thank you for the Opportunity.</p>
@@ -227,9 +227,7 @@ const BrowseJobs = () => {
           <div style="display: flex; gap: 10px; margin-top: 30px;">
             <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
-  
-          <p style="text-align: center; margin-top: 20px;">You will be redirected to job listings in 3 seconds...</p>
-        </div>
+          </div>
       `;
   
       // Replace content temporarily
