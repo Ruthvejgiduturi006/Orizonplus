@@ -188,13 +188,8 @@ const BrowseJobs = () => {
         return;
       }
   
-      // Retrieve the job provider details from localStorage
-      const jobProvider = JSON.parse(localStorage.getItem('jobProviderDetails'));
-  
-      if (!jobProvider) {
-        alert("Job provider details are missing. Please try again later.");
-        return;
-      }
+      const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.providerId}`);
+      const jobProvider = await providerRes.json();
   
       const applicationLetter = `
         <div class="glass-card" style="padding: 20px; font-family: Arial; background: #f9f9f9; border-radius: 10px; max-width: 750px; margin: auto;">
@@ -216,10 +211,10 @@ const BrowseJobs = () => {
             <p>
               The job is provided by <strong>${jobProvider.name}</strong>, who can be contacted at
               <strong>${jobProvider.phone || 'N/A'}</strong> and is located in
-              <strong>${jobProvider.location || 'N/A'}</strong>.
+              <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
-            <p>Thank you for the opportunity.</p>
+            <p>Thank you for the Opportunity.</p>
   
             <p>
               Regards,<br>
@@ -233,21 +228,18 @@ const BrowseJobs = () => {
             <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
   
+          <p style="text-align: center; margin-top: 20px;">You will be redirected to job listings in 3 seconds...</p>
         </div>
       `;
   
       // Replace content temporarily
       document.body.innerHTML = applicationLetter;
   
-      // Show notification to the seeker
-      alert("Your application has been successfully submitted! You will be redirected shortly.");
-  
-      
     } catch (err) {
       console.error(err);
       alert("Application failed. Please try again.");
     }
-  };
+  };  
   
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
