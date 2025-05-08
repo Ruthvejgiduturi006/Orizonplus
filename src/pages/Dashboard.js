@@ -9,6 +9,8 @@ const Dashboard = () => {
   const [profileData, setProfileData] = useState({});
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [messages] = useState([]);
+
 
   // Get user info from localStorage
   const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
