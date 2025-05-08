@@ -214,7 +214,7 @@ const BrowseJobs = () => {
               <strong>${jobProvider.location || 'N/A'}</strong>.
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
-            <p>Thank you for the opportunity.</p>
+            <p>Thank you for the Opportunity.</p>
   
             <p>
               Regards,<br>
@@ -228,36 +228,18 @@ const BrowseJobs = () => {
             <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
   
+          <p style="text-align: center; margin-top: 20px;">You will be redirected to job listings in 3 seconds...</p>
         </div>
       `;
   
       // Replace content temporarily
       document.body.innerHTML = applicationLetter;
   
-      // Show notification to the seeker
-      alert("Your application has been successfully submitted! You will be redirected shortly.");
-  
-      // Optionally store the notification in backend (if needed for future reference)
-      // Example: Use a POST request to store it in the database
-  
-      // const notificationRes = await fetch('/api/notifications', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     userId: seeker._id,  // Assuming seeker._id is available
-      //     message: "Your application for the job has been submitted successfully.",
-      //   }),
-      // });
-  
-      // Optionally handle redirect after a few seconds
-    
     } catch (err) {
       console.error(err);
       alert("Application failed. Please try again.");
     }
-  };
+  };  
   
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
