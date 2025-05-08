@@ -180,32 +180,74 @@ const BrowseJobs = () => {
   const handleSubmitApplication = async (userDetails) => {
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
-      localStorage.setItem('selectedJob', JSON.stringify(selectedJob)); // Save job data
+      const selectedJob = JSON.parse(localStorage.getItem('selectedJob')); // Get the selected job
+      if (!seeker || !selectedJob) {
+        alert("Missing applicant or job data.");
+        return;
+      }
   
-      await axios.post('https://orizonplus.onrender.com/api/apply', {
-        jobId: selectedJob._id,
-        providerId: selectedJob.userId,
-        seekerId: seeker?._id,
-        userDetails,
-      });
+      // 1. Show letter on the page
+      const letterContainer = document.getElementById('letterContainer');
+      letterContainer.innerHTML = `
+  <div style="border: 1px solid #ccc; padding: 20px; font-family: Arial; border-radius: 10px; max-width: 600px; background: #f9f9f9;">
+    <h2 style="text-align: center; color: #2c3e50;">Orizon+ Job Application</h2>
+    <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+    <p><strong>From:</strong> ${seeker.name}</p>
+    <p><strong>Email:</strong> ${seeker.email}</p>
+    <p><strong>Phone:</strong> ${seeker.phone}</p>
+    <br/>
+    <p>Dear ${selectedJob.providerName || 'Hiring Manager'},</p>
+    <p>I am applying for the <strong>${selectedJob.title}</strong> role listed on Orizon+.</p>
+    <p>I am particularly interested in this opportunity due to its hourly-based compensation model. I believe in fair pay for every hour worked, and I am available to contribute efficiently and honestly on a per-hour basis.</p>
+    <p>My priority is to ensure that my work reflects value — both in terms of effort and output — and I’m open to discussing a fair hourly rate as per the job requirements.</p>
+    <p>I look forward to your response and am ready to begin immediately.</p>
+    <br/>
+    <p>Thank you.</p>
+    <p>Sincerely,</p>
+    <p>${seeker.name}</p>
+    <p style="text-align: right; color: gray; font-size: 12px;">Powered by Orizon+</p>
+  </div>
+`;
+      // 2. Create PDF using jsPDF
+      const doc = new jsPDF();
+      doc.setFontSize(16);
+doc.text('Orizon+ Job Application', 20, 20);
+doc.setFontSize(12);
+doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 30);
+doc.text(`From: ${seeker.name}`, 20, 40);
+doc.text(`Email: ${seeker.email}`, 20, 50);
+doc.text(`Phone: ${seeker.phone}`, 20, 60);
+doc.text(`\nDear ${selectedJob.providerName || 'Hiring Manager'},`, 20, 80);
+doc.text(`I am applying for the "${selectedJob.title}" role listed on Orizon+.`, 20, 90);
+doc.text("I’m specifically interested due to its hourly payment model.", 20, 100);
+doc.text("I believe fair compensation is important, and I ensure honest work per hour.", 20, 110);
+doc.text("I'm open to discussing a reasonable hourly rate and can start immediately.", 20, 120);
+doc.text("Thank you for the opportunity.", 20, 135);
+doc.text(`Sincerely,\n${seeker.name}`, 20, 150);
+doc.setFontSize(10);
+doc.text("Powered by Orizon+", 150, 160);
   
-      alert('Application sent successfully!');
-  
-      // Simulate notification to provider (internal/local)
+      // 3. Save notification to localStorage
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
-        type: 'application',
-        jobTitle: selectedJob.title,
+        type: 'Application',
         from: seeker.name,
-        date: new Date().toISOString()
+        jobTitle: selectedJob.title,
+        date: new Date().toISOString(),
+        message: `${seeker.name} has applied for the job "${selectedJob.title}".`
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // Open letter
-      window.open('/application-letter.html', '_blank');
+      // 4. Optionally update dashboard immediately
+      if (typeof updateDashboardNotifications === 'function') {
+        updateDashboardNotifications(); // This will dynamically show notification
+      }
+  
+      alert("Application submitted successfully! Letter downloaded.");
+  
     } catch (err) {
-      console.error(err);
-      alert('Application failed. Try again.');
+      console.error("Application failed:", err);
+      alert("Something went wrong. Please try again.");
     }
   };
   
