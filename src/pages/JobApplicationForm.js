@@ -1,15 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const ApplyJobComponent = ({ selectedJob }) => {
   const [showLetter, setShowLetter] = useState(false);
   const [userDetails, setUserDetails] = useState({});
   const seeker = JSON.parse(localStorage.getItem('user'));
 
+  useEffect(() => {
+    // Check if 'seeker' is in localStorage, fallback if not
+    if (!seeker) {
+      alert('User details are missing. Please log in again.');
+      // Optionally, redirect to login page
+    }
+  }, []);
+
   const handleSubmitApplication = () => {
     try {
+      // Store job details in localStorage
       localStorage.setItem('selectedJob', JSON.stringify(selectedJob));
 
-      // Simulate notification
+      // Simulate notification (you can use actual notification system)
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
         type: 'application',
@@ -53,13 +62,11 @@ const ApplyJobComponent = ({ selectedJob }) => {
 
           <div className="letter">
             <p><strong>Date:</strong> {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-            <p><strong>To:</strong> {selectedJob?.providerName} (Job Provider)</p>
-            <p><strong>From:</strong> {seeker?.name} (Job Seeker)</p>
+            <p><strong>To:</strong> {selectedJob?.providerName || 'Job Provider'} (Job Provider)</p>
+            <p><strong>From:</strong> {seeker?.name || 'Your Name'} (Job Seeker)</p>
+            <p>Dear {selectedJob?.providerName || 'Job Provider'},</p>
             <p>
-              Dear {selectedJob?.providerName},
-            </p>
-            <p>
-              I, <strong>{seeker?.name}</strong>, am applying for the part-time job titled <strong>“{selectedJob?.title}”</strong>. I agree to the fixed payment of <strong>₹{selectedJob?.payment}</strong> for the entire task, without any scope for negotiation or bargaining.
+              I, <strong>{seeker?.name || 'Your Name'}</strong>, am applying for the part-time job titled <strong>“{selectedJob?.title || 'Job Title'}”</strong>. I agree to the fixed payment of <strong>₹{selectedJob?.payment || 'N/A'}</strong> for the entire task, without any scope for negotiation or bargaining.
             </p>
             <p>
               This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.
@@ -68,9 +75,9 @@ const ApplyJobComponent = ({ selectedJob }) => {
 
             <p>
               Regards,<br />
-              <strong>{seeker?.name}</strong><br />
-              Phone: {seeker?.phone}<br />
-              Location: {seeker?.location}
+              <strong>{seeker?.name || 'Your Name'}</strong><br />
+              Phone: {seeker?.phone || 'Phone'}<br />
+              Location: {seeker?.location || 'Location'}
             </p>
           </div>
 
