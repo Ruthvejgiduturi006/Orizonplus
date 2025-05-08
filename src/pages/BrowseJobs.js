@@ -180,18 +180,35 @@ const BrowseJobs = () => {
   const handleSubmitApplication = async (userDetails) => {
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
-      localStorage.setItem('selectedJob', JSON.stringify(selectedJob));
-
-      // Add logic to update the job provider (e.g., notification, status change, etc.)
+      localStorage.setItem('selectedJob', JSON.stringify(selectedJob)); // Save job data
+  
+      await axios.post('https://orizonplus.onrender.com/api/apply', {
+        jobId: selectedJob._id,
+        providerId: selectedJob.userId,
+        seekerId: seeker?._id,
+        userDetails,
+      });
+  
       alert('Application sent successfully!');
-      
-      // Close the modal after submission
-      setModalOpen(false);
+  
+      // Simulate notification to provider (internal/local)
+      const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+      notifications.push({
+        type: 'application',
+        jobTitle: selectedJob.title,
+        from: seeker.name,
+        date: new Date().toISOString()
+      });
+      localStorage.setItem('notifications', JSON.stringify(notifications));
+  
+      // Open letter
+      window.open('/application-letter.html', '_blank');
     } catch (err) {
       console.error(err);
       alert('Application failed. Try again.');
     }
   };
+  
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
