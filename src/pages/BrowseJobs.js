@@ -182,16 +182,10 @@ const BrowseJobs = () => {
       const seeker = JSON.parse(localStorage.getItem('user'));
       localStorage.setItem('selectedJob', JSON.stringify(selectedJob)); // Save job data
   
-      await axios.post('https://orizonplus.onrender.com/api/apply', {
-        jobId: selectedJob._id,
-        providerId: selectedJob.userId,
-        seekerId: seeker?._id,
-        userDetails,
-      });
-  
+      // Simulate success (skip backend call)
       alert('Application sent successfully!');
   
-      // Simulate notification to provider (internal/local)
+      // Create a local notification (simulate provider alert)
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
         type: 'application',
