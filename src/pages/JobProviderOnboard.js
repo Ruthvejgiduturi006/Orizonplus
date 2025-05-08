@@ -40,7 +40,7 @@ const JobProviderOnboard = () => {
       const token = localStorage.getItem('token');
 
       const response = await axios.post(
-        'http://localhost:5000/api/jobProvider/details',
+        'https://orizonplus.onrender.com/api/jobProvider/details',
         {
           userId,
           jobDetails: formData

@@ -159,7 +159,7 @@ const BrowseJobs = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/findjobs');
+        const res = await axios.get('https://orizonplus.onrender.com/api/findjobs');
         const providers = res.data.filter(u => u.jobProviderProfile);
         setUsers(providers);
         setFilteredJobs(providers);
@@ -180,7 +180,7 @@ const BrowseJobs = () => {
   const handleSubmitApplication = async (userDetails) => {
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
-      await axios.post('http://localhost:5000/api/apply', {
+      await axios.post('https://orizonplus.onrender.com/api/apply', {
         jobId: selectedJob._id,
         providerId: selectedJob.userId,
         seekerId: seeker?._id,
