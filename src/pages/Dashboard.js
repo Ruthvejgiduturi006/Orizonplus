@@ -7,6 +7,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('home');
   const [profileData, setProfileData] = useState({});
+  const [notifications, setNotifications] = useState([]);
 
   // Get user info from localStorage
   const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
@@ -25,7 +26,12 @@ const Dashboard = () => {
       });
     }
   }, []); // Empty dependency array ensures this runs only once, after the first render.
-  
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem('notifications') || '[]');
+    setNotifications(stored);
+  }, []);
+
+  const unreadCount = notifications.length;
 
   const handleLogout = () => {
     alert('Logged out');
@@ -176,8 +182,24 @@ const Dashboard = () => {
         </div>
         <nav className="top-menu">
           <button onClick={() => setActiveSection('home')}>Home</button>
-          <button onClick={() => setActiveSection('messages')}><FiMessageCircle className="icon" /> Messages</button>
-          <button onClick={() => setActiveSection('help')}>Help</button>
+<button onClick={() => setActiveSection('messages')} style={{ position: 'relative' }}>
+      <FiMessageCircle className="icon" />
+      Messages
+      {unreadCount > 0 && (
+        <span style={{
+          position: 'absolute',
+          top: '-5px',
+          right: '-5px',
+          background: 'red',
+          color: 'white',
+          borderRadius: '50%',
+          padding: '2px 6px',
+          fontSize: '12px',
+        }}>
+          {unreadCount}
+        </span>
+      )}
+    </button>          <button onClick={() => setActiveSection('help')}>Help</button>
         </nav>
         <div className="right">
           <button className="logout-btn" onClick={handleLogout}>

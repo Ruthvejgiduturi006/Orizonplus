@@ -181,7 +181,6 @@ const BrowseJobs = () => {
 
   const handleSubmitApplication = async () => {
     try {
-      // Retrieve the logged-in job seeker and selected job details
       const seeker = JSON.parse(localStorage.getItem('user'));
       const selectedJob = JSON.parse(localStorage.getItem('selectedJob'));
   
@@ -190,14 +189,14 @@ const BrowseJobs = () => {
         return;
       }
   
-      // Fetch actual job provider details if not already available
+      // Fetch provider details if not available
       let jobProvider = selectedJob.providerDetails;
       if (!jobProvider || !jobProvider.name) {
         const response = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.providerId}`);
         jobProvider = await response.json();
       }
   
-      // Log application notification
+      // Save application notification
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
         type: 'application',
@@ -207,53 +206,55 @@ const BrowseJobs = () => {
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // Generate the application confirmation letter
+      // Generate today's date
+      const currentDate = new Date().toLocaleDateString('en-IN');
+  
+      // Create detailed confirmation letter
       const applicationLetter = `
-        <div style="padding: 20px; font-family: Arial, sans-serif; max-width: 700px; margin: auto; background: #f9f9f9; border-radius: 10px;">
-          <h2 style="text-align: center; color: #007bff;">🎯 Job Application Confirmation</h2>
-          <p><strong>Job Title:</strong> ${selectedJob.jobTitle}</p>
-          <p><strong>Payment:</strong> ₹${selectedJob.payDetails}</p>
-          <p><strong>Job ID:</strong> ${selectedJob._id || 'N/A'}</p>
-          <hr />
-          <p><strong>Job Seeker:</strong> ${seeker.name} (${seeker.phone})</p>
-          <p><strong>Job Provider:</strong> ${jobProvider.name || 'N/A'} (${jobProvider.phone || 'N/A'})</p>
-          <hr />
-          <p>This letter serves as an official confirmation that <strong>${seeker.name}</strong> has applied for the job "<strong>${selectedJob.jobTitle}</strong>" and agrees to the listed payment terms.</p>
+        <div class="glass-card" style="padding: 25px; font-family: Arial, sans-serif; max-width: 800px; margin: auto; background: #fefefe; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <h2 class="text-center" style="text-align:center; color:#28a745;">🎉 Application Submitted</h2>
+          <div class="info-box" style="background:#e9f7ef; padding: 15px; border-left: 4px solid #28a745; margin-bottom: 20px;">
+            This is a fixed price job. No bargaining is allowed. Below is your proof letter.
+          </div>
+  
+          <div class="letter" style="line-height:1.6; color:#333;">
+            <p><strong>Date:</strong> ${currentDate}</p>
+            <p><strong>To:</strong> ${jobProvider.name || 'Job Provider'} (Job Provider)</p>
+            <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
+  
+            <p>Dear ${jobProvider.name || 'Job Provider'},</p>
+            <p>
+              I, <strong>${seeker.name}</strong>, am applying for the part-time job titled <strong>“${selectedJob.jobTitle}”</strong>.
+              I agree to the fixed payment of <strong>₹${selectedJob.payDetails || 'N/A'}</strong> for the entire task, without any scope for negotiation or bargaining.
+            </p>
+            <p>
+              This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.
+            </p>
+            <p>Thank you for the opportunity.</p>
+  
+            <p>
+              Regards,<br>
+              <strong>${seeker.name}</strong><br>
+              Phone: ${seeker.phone}<br>
+              Location: ${seeker.address || 'Not Provided'}
+            </p>
+          </div>
+  
           <div style="margin-top: 30px; display: flex; gap: 10px;">
-            <button onclick="window.location.href='https://orizonplus.netlify.app/BrowseJobs'" style="flex: 1; background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px;">← Back to Jobs</button>
-            <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
+            <button onclick="window.location.href='https://orizonplus.netlify.app/BrowseJobs'" style="flex: 1; background: #007bff; color: white; border: none; padding: 12px; border-radius: 5px;">← Back to Jobs</button>
+            <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 12px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
         </div>
       `;
   
-      // Replace the page content with the application proof letter
+      // Replace content with letter
       document.body.innerHTML = applicationLetter;
-  
-      // Show Success Popup
-      showSuccessPopup();
   
     } catch (err) {
       console.error(err);
       alert("Application failed. Please try again.");
     }
   };
-  
-  // Function to show the "Successfully Applied" popup
-  const showSuccessPopup = () => {
-    const popup = document.createElement('div');
-    popup.id = 'success-popup';
-    popup.innerHTML = `
-      <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background: #4CAF50; color: white; border-radius: 10px; font-size: 16px; text-align: center; z-index: 9999;">
-        <strong>Success!</strong> You have successfully applied for the job.
-      </div>
-    `;
-    document.body.appendChild(popup);
-  
-    // Remove the popup after 3 seconds
-    setTimeout(() => {
-      popup.remove();
-    }, 3000); // 3 seconds delay
-  };  
   
   
   const handleFilterChange = (e) => {
