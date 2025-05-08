@@ -61,7 +61,7 @@ const JobSeekerOnboard = () => {
     e.preventDefault();
     try {
       // Send the form data to the backend (optional, depends on your API)
-      await axios.post('http://localhost:5000/api/jobseeker', formData);
+      await axios.post('https://orizonplus.onrender.com/api/jobSeeker', formData);
 
       // Save the data in localStorage under the user's unique ID
       localStorage.setItem(`user_${userId}`, JSON.stringify(formData));
