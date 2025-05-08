@@ -180,29 +180,18 @@ const BrowseJobs = () => {
   const handleSubmitApplication = async (userDetails) => {
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
-      localStorage.setItem('selectedJob', JSON.stringify(selectedJob)); // Save job data
-  
-      // Simulate success (skip backend call)
+      localStorage.setItem('selectedJob', JSON.stringify(selectedJob));
+
+      // Add logic to update the job provider (e.g., notification, status change, etc.)
       alert('Application sent successfully!');
-  
-      // Create a local notification (simulate provider alert)
-      const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
-      notifications.push({
-        type: 'application',
-        jobTitle: selectedJob.title,
-        from: seeker.name,
-        date: new Date().toISOString()
-      });
-      localStorage.setItem('notifications', JSON.stringify(notifications));
-  
-      // Open letter
-      window.open('/application-letter.html', '_blank');
+      
+      // Close the modal after submission
+      setModalOpen(false);
     } catch (err) {
       console.error(err);
       alert('Application failed. Try again.');
     }
   };
-  
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
