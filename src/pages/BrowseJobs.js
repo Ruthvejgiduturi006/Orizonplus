@@ -190,7 +190,7 @@ const BrowseJobs = () => {
       // Fetch actual job provider details (if not already stored)
       let jobProvider = selectedJob.providerDetails;
       if (!jobProvider || !jobProvider.name) {
-        const response = await fetch(`/api/jobprovider-onboard/${selectedJob.providerId}`);
+        const response = await fetch(`https://orizonplus.onrender.com/api/jobprovider-onboard/${selectedJob.providerId}`);
         jobProvider = await response.json();
       }
   
