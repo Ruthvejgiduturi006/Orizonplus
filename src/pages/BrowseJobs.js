@@ -156,7 +156,6 @@ const BrowseJobs = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [mapOpen, setMapOpen] = useState(false);
 
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -179,35 +178,31 @@ const BrowseJobs = () => {
     localStorage.setItem('selectedJob', JSON.stringify(jobWithUser)); // 🔥 Important
     setModalOpen(true);
   };
-  const [seeker] = useState(JSON.parse(localStorage.getItem('user')));
-
   const handleSubmitApplication = async () => {
     try {
+      const seeker = JSON.parse(localStorage.getItem('user'));
+      const selectedJob = JSON.parse(localStorage.getItem('selectedJob'));
+  
       if (!selectedJob) {
         alert("No job selected.");
         return;
       }
-
-      // Retrieve the job provider details from localStorage
-      const jobProvider = JSON.parse(localStorage.getItem('jobProviderDetails'));
-
-      if (!jobProvider) {
-        alert("Job provider details are missing. Please try again later.");
-        return;
-      }
- <Link to="/dashboard" className="back-home">← Back to DASHBOARD</Link>
+  
+      const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.providerId}`);
+      const jobProvider = await providerRes.json();
+  
       const applicationLetter = `
         <div class="glass-card" style="padding: 20px; font-family: Arial; background: #f9f9f9; border-radius: 10px; max-width: 750px; margin: auto;">
           <h2 style="text-align: center;">🎉 Application Submitted</h2>
           <div class="info-box">
             This is a fixed price job. No bargaining is allowed. Below is your proof letter.
           </div>
-
+  
           <div class="letter">
             <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
             <p><strong>To:</strong> ${jobProvider.name || 'N/A'} (Job Provider)</p>
             <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
-
+  
             <p>Dear ${jobProvider.name || 'Sir/Madam'},</p>
             <p>
               I, <strong>${seeker.name}</strong>, am applying for the part-time job titled <strong>“${selectedJob.jobTitle}”</strong>.
@@ -220,7 +215,7 @@ const BrowseJobs = () => {
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
             <p>Thank you for the opportunity.</p>
-
+  
             <p>
               Regards,<br>
               <strong>${seeker.name}</strong><br>
@@ -228,26 +223,36 @@ const BrowseJobs = () => {
               Location: ${seeker.address || 'N/A'}
             </p>
           </div>
-
+  
           <div style="display: flex; gap: 10px; margin-top: 30px;">
             <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
           </div>
-
+  
         </div>
       `;
-
+  
       // Replace content temporarily
       document.body.innerHTML = applicationLetter;
-
+  
       // Show notification to the seeker
       alert("Your application has been successfully submitted! You will be redirected shortly.");
-
-      // Optionally reset selectedJob after successful application
-      setSelectedJob(null);  // Reset the selected job to null or default value
-
+  
+      // Optionally store the notification in backend (if needed for future reference)
+      // Example: Use a POST request to store it in the database
+  
+      // const notificationRes = await fetch('/api/notifications', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     userId: seeker._id,  // Assuming seeker._id is available
+      //     message: "Your application for the job has been submitted successfully.",
+      //   }),
+      // });
+  
       // Optionally handle redirect after a few seconds
-
-
+    
     } catch (err) {
       console.error(err);
       alert("Application failed. Please try again.");
