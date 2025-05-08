@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-// Define schema for job applications
 const applicationSchema = new mongoose.Schema({
   jobId: String,
   providerId: String,
@@ -17,15 +16,19 @@ const applicationSchema = new mongoose.Schema({
   }
 });
 
-// Create the model
-const Application = mongoose.model('Application', applicationSchema);
+// Prevent re-registration of model during hot reloads/dev
+const Application = mongoose.models.Application || mongoose.model('Application', applicationSchema);
 
-// Handle application submission
 router.post('/', async (req, res) => {
   try {
     const { jobId, providerId, seekerId, userDetails } = req.body;
 
-    // Optional: prevent duplicate applications
+    // Validate inputs
+    if (!jobId || !providerId || !seekerId || !userDetails?.phone || !userDetails?.location) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    // Prevent duplicate applications
     const existing = await Application.findOne({ jobId, seekerId });
     if (existing) {
       return res.status(400).json({ message: 'Already applied for this job' });
