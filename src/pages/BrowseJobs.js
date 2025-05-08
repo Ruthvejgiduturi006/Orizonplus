@@ -179,7 +179,7 @@ const BrowseJobs = () => {
     localStorage.setItem('selectedJob', JSON.stringify(jobWithUser)); // 🔥 Important
     setModalOpen(true);
   };
-  const [seeker, setSeeker] = useState(JSON.parse(localStorage.getItem('user')));
+  const [seeker] = useState(JSON.parse(localStorage.getItem('user')));
 
   const handleSubmitApplication = async () => {
     try {
