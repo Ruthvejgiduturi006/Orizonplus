@@ -19,5 +19,18 @@ router.post('/details', async (req, res) => {
     res.status(500).json({ message: 'Error saving details', error });
   }
 });
+// GET job provider details by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user || !user.jobProviderProfile) {
+      return res.status(404).json({ message: 'Job provider not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching job provider:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 
 module.exports = router;
