@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 const ApplyJobComponent = ({ selectedJob }) => {
   const [showLetter, setShowLetter] = useState(false);
-  const [userDetails, setUserDetails] = useState({});
   const seeker = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -36,6 +35,15 @@ const ApplyJobComponent = ({ selectedJob }) => {
     }
   };
 
+  // Provide fallback values if data is missing in selectedJob
+  const jobTitle = selectedJob?.title || "Job Title not available";
+  const payment = selectedJob?.payment || "Not specified";
+  const providerName = selectedJob?.providerName || "Not Available";
+  const jobLocation = selectedJob?.location || "Not Available";
+  const jobShift = selectedJob?.shift || "Not Available";
+  const jobDescription = selectedJob?.description || "Not Available";
+  const jobLastDate = selectedJob?.lastDate || "Not Available";
+
   return (
     <div>
       {/* Application Form */}
@@ -62,27 +70,53 @@ const ApplyJobComponent = ({ selectedJob }) => {
 
           <div className="letter">
             <p><strong>Date:</strong> {new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-            <p><strong>To:</strong> {selectedJob?.providerName || 'Job Provider'} (Job Provider)</p>
-            <p><strong>From:</strong> {seeker?.name || 'Your Name'} (Job Seeker)</p>
-            <p>Dear {selectedJob?.providerName || 'Job Provider'},</p>
+            <p><strong>To:</strong> {providerName} (Job Provider)</p>
+            <p><strong>From:</strong> {seeker?.name} (Job Seeker)</p>
+            <p>Dear {providerName},</p>
             <p>
-              I, <strong>{seeker?.name || 'Your Name'}</strong>, am applying for the part-time job titled <strong>“{selectedJob?.title || 'Job Title'}”</strong>. I agree to the fixed payment of <strong>₹{selectedJob?.payment || 'N/A'}</strong> for the entire task, without any scope for negotiation or bargaining.
+              I, <strong>{seeker?.name}</strong>, am applying for the part-time job titled <strong>“{jobTitle}”</strong>. I agree to the fixed payment of <strong>₹{payment}</strong> for the entire task, without any scope for negotiation or bargaining.
             </p>
             <p>
               This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.
             </p>
-            <p>Thank you for the opportunity.</p>
+            <p>thank you for the opportunity.</p>
 
             <p>
               Regards,<br />
-              <strong>{seeker?.name || 'Your Name'}</strong><br />
-              Phone: {seeker?.phone || 'Phone'}<br />
-              Location: {seeker?.location || 'Location'}
+              <strong>{seeker?.name}</strong><br />
+              Phone: {seeker?.phone || 'Not Available'}<br />
+              Location: {seeker?.location || 'Not Available'}
             </p>
+
+            <h3>Job Details:</h3>
+            <ul>
+              <li><strong>Job Title:</strong> {jobTitle}</li>
+              <li><strong>Location:</strong> {jobLocation}</li>
+              <li><strong>Shift:</strong> {jobShift}</li>
+              <li><strong>Last Date:</strong> {jobLastDate}</li>
+              <li><strong>Pay:</strong> ₹{payment}/Day</li>
+              <li><strong>Description:</strong> {jobDescription}</li>
+            </ul>
+
+            <h3>Job Provider Details:</h3>
+            <ul>
+              <li><strong>Name:</strong> {providerName}</li>
+              <li><strong>Email:</strong> {selectedJob?.providerEmail || 'Not Available'}</li>
+              <li><strong>Phone:</strong> {selectedJob?.providerPhone || 'Not Available'}</li>
+              <li><strong>Location:</strong> {selectedJob?.providerLocation || 'Not Available'}</li>
+            </ul>
+
+            <h3>Job Seeker Details:</h3>
+            <ul>
+              <li><strong>Name:</strong> {seeker?.name}</li>
+              <li><strong>Email:</strong> {seeker?.email}</li>
+              <li><strong>Phone:</strong> {seeker?.phone}</li>
+              <li><strong>Location:</strong> {seeker?.location || 'Not Available'}</li>
+            </ul>
           </div>
 
           <div className="role-buttons-2col">
-            <button className="role-btn" onClick={() => window.location.href = '/browse-jobs'}>
+            <button className="role-btn" onClick={() => window.location.href = '/BrowseJobs'}>
               ← Back to Jobs<br /><span>Return to job listings</span>
             </button>
             <button className="role-btn" onClick={() => window.print()}>
