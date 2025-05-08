@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [profileData, setProfileData] = useState({});
   const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   // Get user info from localStorage
   const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
@@ -26,13 +27,21 @@ const Dashboard = () => {
       });
     }
   }, []); // Empty dependency array ensures this runs only once, after the first render.
+  // Fetch notifications from localStorage
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem('notifications') || '[]');
     setNotifications(stored);
+    const unread = stored.filter(msg => !msg.read).length;
+    setUnreadCount(unread);
   }, []);
-
-  const unreadCount = notifications.length;
-
+  const handleClickMessages = () => {
+    setActiveSection('messages');
+    // Optionally mark all as read:
+    const updated = notifications.map(n => ({ ...n, read: true }));
+    setNotifications(updated);
+    localStorage.setItem('notifications', JSON.stringify(updated));
+    setUnreadCount(0);
+  };
   const handleLogout = () => {
     alert('Logged out');
     localStorage.removeItem('user');
@@ -128,8 +137,32 @@ const Dashboard = () => {
         );
 
       case 'messages':
-        return <div className="content">Messages Page</div>;
-
+        return (
+          <div className="content">
+            <h2>📩 Your Messages</h2>
+            {messages.length === 0 ? (
+              <p>No messages yet.</p>
+            ) : (
+              <ul>
+                {messages.map((msg, idx) => (
+                  <li
+                    key={idx}
+                    style={{
+                      background: msg.read ? '#f0f0f0' : '#fff',
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      marginBottom: '8px',
+                    }}
+                  >
+                    <strong>{msg.title}</strong>
+                    <p>{msg.content}</p>
+                    <small>{new Date(msg.timestamp).toLocaleString()}</small>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
       case 'myjobs':
         return <div className="content">My Posted Jobs</div>;
 
@@ -182,24 +215,25 @@ const Dashboard = () => {
         </div>
         <nav className="top-menu">
           <button onClick={() => setActiveSection('home')}>Home</button>
-<button onClick={() => setActiveSection('messages')} style={{ position: 'relative' }}>
-      <FiMessageCircle className="icon" />
-      Messages
-      {unreadCount > 0 && (
-        <span style={{
-          position: 'absolute',
-          top: '-5px',
-          right: '-5px',
-          background: 'red',
-          color: 'white',
-          borderRadius: '50%',
-          padding: '2px 6px',
-          fontSize: '12px',
-        }}>
-          {unreadCount}
-        </span>
-      )}
-    </button>          <button onClick={() => setActiveSection('help')}>Help</button>
+          <button onClick={handleClickMessages} style={{ position: 'relative' }}>
+        <FiMessageCircle className="icon" />
+        Messages
+        {unreadCount > 0 && (
+          <span style={{
+            position: 'absolute',
+            top: '-5px',
+            right: '-5px',
+            background: 'red',
+            color: 'white',
+            borderRadius: '50%',
+            padding: '2px 6px',
+            fontSize: '12px',
+          }}>
+            {unreadCount}
+          </span>
+        )}
+      </button>
+       <button onClick={() => setActiveSection('help')}>Help</button>
         </nav>
         <div className="right">
           <button className="logout-btn" onClick={handleLogout}>
