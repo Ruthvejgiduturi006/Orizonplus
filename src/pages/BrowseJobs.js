@@ -180,6 +180,9 @@ const BrowseJobs = () => {
   const handleSubmitApplication = (userDetails) => {
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
+      const selectedJob = JSON.parse(localStorage.getItem('selectedJob')); // Ensure selectedJob is retrieved
+      const jobProvider = selectedJob ? selectedJob.providerDetails : {}; // Retrieve provider details from selected job
+  
       localStorage.setItem('selectedJob', JSON.stringify(selectedJob)); // Save job data
   
       alert('Application sent successfully!');
@@ -194,7 +197,7 @@ const BrowseJobs = () => {
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // Display the application letter
+      // Application Letter HTML with provider details and "Back to Jobs" button linking to findjobs.html
       const applicationLetter = `
         <h2 class="text-center">🎉 Application Submitted</h2>
         <div class="info-box">
@@ -203,10 +206,10 @@ const BrowseJobs = () => {
         <div class="letter">
           <div class="stamp"></div>
           <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-          <p><strong>To:</strong> Mr. ${selectedJob.providerName} (Job Provider)</p>
+          <p><strong>To:</strong> Mr. ${jobProvider.name || 'Job Provider'} (Job Provider)</p>
           <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
   
-          <p>Dear Mr. ${selectedJob.providerName},</p>
+          <p>Dear Mr. ${jobProvider.name || 'Job Provider'},</p>
           <p>
             I, <strong>${seeker.name}</strong>, am applying for the part-time job titled 
             <strong>“${selectedJob.title}”</strong>. I agree to the fixed payment of 
@@ -217,30 +220,163 @@ const BrowseJobs = () => {
           </p>
           <p>Thank you for the opportunity.</p>
   
-          <p>
-            Regards,<br>
-            <strong>${seeker.name}</strong><br>
-            Phone: ${seeker.phone}<br>
-            Location: ${seeker.location}
-          </p>
-        </div>
-        <div class="role-buttons-2col">
-          <button class="role-btn" onclick="window.location.href='browse-jobs.html'">
-            ← Back to Jobs<br><span>Return to job listings</span>
-          </button>
-          <button class="role-btn" onclick="window.print()">
-            🖨 Print Proof<br><span>Download/Print this letter</span>
-          </button>
+          <p><strong>Job Details:</strong></p>
+          <ul>
+            <li><strong>Job Icon:</strong> <img src="${selectedJob.icon || 'default_icon.png'}" alt="Job Icon" style="width: 40px; height: 40px;" /></li>
+            <li><strong>Job Title:</strong> ${selectedJob.title}</li>
+            <li><strong>Location:</strong> ${selectedJob.location}</li>
+            <li><strong>Shift:</strong> ${selectedJob.shift}</li>
+            <li><strong>Last Date:</strong> ${selectedJob.lastDate}</li>
+            <li><strong>Pay:</strong> ₹${selectedJob.pay}/Day</li>
+            <li><strong>Description:</strong> ${selectedJob.description}</li>
+            <li><strong>Working Days:</strong> ${selectedJob.workingDays}</li>
+            <li><strong>Timings & Duration:</strong> ${selectedJob.timings}</li>
+            <li><strong>Contact:</strong> ${selectedJob.contact}</li>
+            <li><strong>Openings:</strong> ${selectedJob.openings}</li>
+          </ul>
+  
+          <p><strong>Job Provider Details:</strong></p>
+          <ul>
+            <li><strong>Name:</strong> ${jobProvider.name || 'Not Available'}</li>
+            <li><strong>Email:</strong> ${jobProvider.email || 'Not Available'}</li>
+            <li><strong>Phone:</strong> ${jobProvider.phone || 'Not Available'}</li>
+            <li><strong>Location:</strong> ${jobProvider.location || 'Not Available'}</li>
+            <li><strong>Gender:</strong> ${jobProvider.gender || 'Not Available'}</li>
+            <li><strong>DOB:</strong> ${jobProvider.dob || 'Not Available'}</li>
+            <li><strong>Languages:</strong> ${jobProvider.languages || 'Not Available'}</li>
+          </ul>
+  
+          <p><strong>Job Seeker Details:</strong></p>
+          <ul>
+            <li><strong>Name:</strong> ${seeker.name || 'Not Available'}</li>
+            <li><strong>Email:</strong> ${seeker.email || 'Not Available'}</li>
+            <li><strong>Phone:</strong> ${seeker.phone || 'Not Available'}</li>
+            <li><strong>Location:</strong> ${seeker.location || 'Not Available'}</li>
+            <li><strong>Gender:</strong> ${seeker.gender || 'Not Available'}</li>
+            <li><strong>DOB:</strong> ${seeker.dob || 'Not Available'}</li>
+            <li><strong>Languages:</strong> ${seeker.languages || 'Not Available'}</li>
+          </ul>
+  
+          <div class="role-buttons-2col">
+          <button className="role-btn" onClick={() => window.location.href = '/BrowseJobs'}>
+              ← Back to Jobs<br /><span>Return to job listings</span>
+            </button>
+            <button class="role-btn" onclick="window.print()">
+              🖨 Print Proof<br><span>Download/Print this letter</span>
+            </button>
+          </div>
         </div>
       `;
-      
-      // Insert the application letter HTML into the page
+  
+      // CSS Styles
+      const styles = `
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+          }
+  
+          .text-center {
+            text-align: center;
+          }
+  
+          .info-box {
+            background-color: #e0f7fa;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+          }
+  
+          .letter {
+            margin-top: 20px;
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 12px;
+            color: #1e3a8a;
+            position: relative;
+            font-size: 16px;
+            line-height: 1.6;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+  
+          .stamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transform: rotate(-15deg);
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffffcc;
+            border: 2px dashed #fff;
+            border-radius: 12px;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+  
+          .stamp::after {
+            content: "✔ Orizon+";
+            display: block;
+          }
+  
+          .letter p {
+            margin-bottom: 12px;
+          }
+  
+          .letter strong {
+            font-weight: bold;
+          }
+  
+          .letter span {
+            font-style: italic;
+          }
+  
+          .role-buttons-2col {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+          }
+  
+          .role-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+          }
+  
+          .role-btn:hover {
+            background-color: #0056b3;
+          }
+  
+          .role-btn span {
+            font-size: 12px;
+            display: block;
+          }
+  
+          .letter ul {
+            list-style: none;
+            padding-left: 0;
+          }
+  
+          .letter ul li {
+            margin: 5px 0;
+          }
+        </style>
+      `;
+  
+      // Insert the styles and application letter HTML into the page
+      document.head.insertAdjacentHTML('beforeend', styles);
       document.body.innerHTML = applicationLetter;
     } catch (err) {
       console.error(err);
       alert('Application failed. Try again.');
     }
-  };  
+  };
   
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
