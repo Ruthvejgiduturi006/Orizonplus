@@ -174,65 +174,69 @@ const BrowseJobs = () => {
   }, []);
 
   const handleApply = (job, userId) => {
-    setSelectedJob({ ...job, userId });
+    const fullJob = { ...job, userId };
+    localStorage.setItem('selectedJob', JSON.stringify(fullJob));
+    setSelectedJob(fullJob);
     setModalOpen(true);
-  };
-  const updateDashboardNotifications = (userId, message) => {
-    // Optional: Send this to your backend API if needed
-    console.log(`Notification for User ${userId}: ${message}`);
   };
   
   const handleSubmitApplication = async (userDetails) => {
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
-      const selectedJob = JSON.parse(localStorage.getItem('selectedJob')); // Get the selected job
+      const selectedJob = JSON.parse(localStorage.getItem('selectedJob'));
+  
       if (!seeker || !selectedJob) {
         alert("Missing applicant or job data.");
         return;
       }
   
-      // 1. Show letter on the page
+      // 1. Display letter in HTML container
       const letterContainer = document.getElementById('letterContainer');
-      letterContainer.innerHTML = `
-  <div style="border: 1px solid #ccc; padding: 20px; font-family: Arial; border-radius: 10px; max-width: 600px; background: #f9f9f9;">
-    <h2 style="text-align: center; color: #2c3e50;">Orizon+ Job Application</h2>
-    <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-    <p><strong>From:</strong> ${seeker.name}</p>
-    <p><strong>Email:</strong> ${seeker.email}</p>
-    <p><strong>Phone:</strong> ${seeker.phone}</p>
-    <br/>
-    <p>Dear ${selectedJob.providerName || 'Hiring Manager'},</p>
-    <p>I am applying for the <strong>${selectedJob.title}</strong> role listed on Orizon+.</p>
-    <p>I am particularly interested in this opportunity due to its hourly-based compensation model. I believe in fair pay for every hour worked, and I am available to contribute efficiently and honestly on a per-hour basis.</p>
-    <p>My priority is to ensure that my work reflects value — both in terms of effort and output — and I’m open to discussing a fair hourly rate as per the job requirements.</p>
-    <p>I look forward to your response and am ready to begin immediately.</p>
-    <br/>
-    <p>Thank you.</p>
-    <p>Sincerely,</p>
-    <p>${seeker.name}</p>
-    <p style="text-align: right; color: gray; font-size: 12px;">Powered by Orizon+</p>
-  </div>
-`;
-      // 2. Create PDF using jsPDF
+      if (letterContainer) {
+        letterContainer.innerHTML = `
+          <div style="border: 1px solid #ccc; padding: 20px; font-family: Arial; border-radius: 10px; max-width: 600px; background: #f9f9f9;">
+            <h2 style="text-align: center; color: #2c3e50;">Orizon+ Job Application</h2>
+            <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+            <p><strong>From:</strong> ${seeker.name}</p>
+            <p><strong>Email:</strong> ${seeker.email}</p>
+            <p><strong>Phone:</strong> ${seeker.phone}</p>
+            <br/>
+            <p>Dear ${selectedJob.providerName || 'Hiring Manager'},</p>
+            <p>I am applying for the <strong>${selectedJob.title}</strong> role listed on Orizon+.</p>
+            <p>I am particularly interested in this opportunity due to its hourly-based compensation model. I believe in fair pay for every hour worked, and I am available to contribute efficiently and honestly on a per-hour basis.</p>
+            <p>My priority is to ensure that my work reflects value — both in terms of effort and output — and I’m open to discussing a fair hourly rate as per the job requirements.</p>
+            <p>I look forward to your response and am ready to begin immediately.</p>
+            <br/>
+            <p>Thank you.</p>
+            <p>Sincerely,</p>
+            <p>${seeker.name}</p>
+            <p style="text-align: right; color: gray; font-size: 12px;">Powered by Orizon+</p>
+          </div>
+        `;
+      }
+  
+      // 2. Create PDF
       const doc = new jsPDF();
       doc.setFontSize(16);
-doc.text('Orizon+ Job Application', 20, 20);
-doc.setFontSize(12);
-doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 30);
-doc.text(`From: ${seeker.name}`, 20, 40);
-doc.text(`Email: ${seeker.email}`, 20, 50);
-doc.text(`Phone: ${seeker.phone}`, 20, 60);
-doc.text(`\nDear ${selectedJob.providerName || 'Hiring Manager'},`, 20, 80);
-doc.text(`I am applying for the "${selectedJob.title}" role listed on Orizon+.`, 20, 90);
-doc.text("I’m specifically interested due to its hourly payment model.", 20, 100);
-doc.text("I believe fair compensation is important, and I ensure honest work per hour.", 20, 110);
-doc.text("I'm open to discussing a reasonable hourly rate and can start immediately.", 20, 120);
-doc.text("Thank you for the opportunity.", 20, 135);
-doc.text(`Sincerely,\n${seeker.name}`, 20, 150);
-doc.setFontSize(10);
-doc.text("Powered by Orizon+", 150, 160);
+      doc.text('Orizon+ Job Application', 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 30);
+      doc.text(`From: ${seeker.name}`, 20, 40);
+      doc.text(`Email: ${seeker.email}`, 20, 50);
+      doc.text(`Phone: ${seeker.phone}`, 20, 60);
+      doc.text(`Dear ${selectedJob.providerName || 'Hiring Manager'},`, 20, 80);
+      doc.text(`I am applying for the "${selectedJob.title}" role listed on Orizon+.`, 20, 90);
+      doc.text("I’m specifically interested due to its hourly payment model.", 20, 100);
+      doc.text("I believe fair compensation is important, and I ensure honest work per hour.", 20, 110);
+      doc.text("I'm open to discussing a reasonable hourly rate and can start immediately.", 20, 120);
+      doc.text("Thank you for the opportunity.", 20, 135);
+      doc.text(`Sincerely, ${seeker.name}`, 20, 150);
+      doc.setFontSize(10);
+      doc.text("Powered by Orizon+", 150, 160);
   
-      // 3. Save notification to localStorage
+      doc.save(`Application_${selectedJob.title}.pdf`);
+  
+      // 3. Store notification in localStorage
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
         type: 'Application',
@@ -243,18 +247,15 @@ doc.text("Powered by Orizon+", 150, 160);
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // 4. Optionally update dashboard immediately
-      if (typeof updateDashboardNotifications === 'function') {
-        updateDashboardNotifications(); // This will dynamically show notification
-      }
+      // 4. Optional: send backend notification here
+      updateDashboardNotifications(selectedJob.userId, `${seeker.name} has applied for "${selectedJob.title}".`);
   
-      alert("Application submitted successfully! Letter downloaded.");
-  
-    } catch (err) {
-      console.error("Application failed:", err);
-      alert("Something went wrong. Please try again.");
+      alert('Application submitted successfully!');
+    } catch (error) {
+      console.error('Application error:', error);
+      alert('Failed to submit application. Please try again.');
     }
-  };
+  };  
   
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
