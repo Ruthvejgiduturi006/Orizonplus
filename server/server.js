@@ -8,6 +8,8 @@ const jobSeekerRoutes = require('./routes/jobSeekerRoutes');
 const jobProviderRoutes = require('./routes/jobProviderRoutes');
 const jobRoutes = require('./routes/job');
 const findJobsRoute = require('./routes/findjob');
+const applyRoute = require('./routes/apply'); // <-- Add this
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +29,8 @@ app.use('/api/jobSeeker', jobSeekerRoutes);
 app.use('/api/jobProvider', jobProviderRoutes);
 app.use('/api/job', jobRoutes);
 app.use('/api/findjobs', findJobsRoute);
+app.use('/api/apply', applyRoute); // <-- Add this
+
 
 // ✅ MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
