@@ -179,11 +179,21 @@ const BrowseJobs = () => {
 
   const handleSubmitApplication = (userDetails) => {
     try {
+      // Retrieve seeker and selected job data from localStorage
       const seeker = JSON.parse(localStorage.getItem('user'));
-      const selectedJob = JSON.parse(localStorage.getItem('selectedJob')); // Ensure selectedJob is retrieved
-      const jobProvider = selectedJob ? selectedJob.providerDetails : {}; // Retrieve provider details from selected job
+      const selectedJob = JSON.parse(localStorage.getItem('selectedJob'));
   
-      localStorage.setItem('selectedJob', JSON.stringify(selectedJob)); // Save job data
+      // Ensure selected job exists
+      if (!selectedJob) {
+        alert("No job selected. Please choose a job before applying.");
+        return;
+      }
+  
+      // Retrieve provider details from selected job
+      const jobProvider = selectedJob.providerDetails || {};
+  
+      // Save the selected job in localStorage
+      localStorage.setItem('selectedJob', JSON.stringify(selectedJob));
   
       alert('Application sent successfully!');
   
@@ -197,7 +207,7 @@ const BrowseJobs = () => {
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // Application Letter HTML with provider details and "Back to Jobs" button linking to findjobs.html
+      // Application Letter HTML with provider details and "Back to Jobs" button linking to BrowseJobs
       const applicationLetter = `
         <h2 class="text-center">🎉 Application Submitted</h2>
         <div class="info-box">
@@ -258,7 +268,7 @@ const BrowseJobs = () => {
           </ul>
   
           <div class="role-buttons-2col">
-          <button className="role-btn" onClick={() => window.location.href = '/BrowseJobs'}>
+            <button class="role-btn" onclick="window.location.href = 'browsejobs.html'">
               ← Back to Jobs<br /><span>Return to job listings</span>
             </button>
             <button class="role-btn" onclick="window.print()">
@@ -372,11 +382,13 @@ const BrowseJobs = () => {
       // Insert the styles and application letter HTML into the page
       document.head.insertAdjacentHTML('beforeend', styles);
       document.body.innerHTML = applicationLetter;
+  
     } catch (err) {
       console.error(err);
       alert('Application failed. Try again.');
     }
   };
+  
   
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
