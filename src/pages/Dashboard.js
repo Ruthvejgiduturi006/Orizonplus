@@ -72,7 +72,7 @@ const Dashboard = () => {
         return (
           <div className="main-cards">
             <div className="action-card" onClick={() => navigate('/jobseeker-onboard')}>
-              <img src="details.webp" alt="Onboarding" />
+              <img src="work.png" alt="Onboarding" />
               <p>Job Seeker Onboarding</p>
               <button>Onboarding</button>
             </div>
@@ -82,7 +82,7 @@ const Dashboard = () => {
               <button>Find a Job</button>
             </div>
             <div className="action-card" onClick={() => navigate('/jobprovider-onboard')}>
-              <img src="hiregif.webp" alt="Post a Job" />
+              <img src="hire.jpeg" alt="Post a Job" />
               <p>Get staff in</p>
               <button>Post a Job</button>
             </div>
@@ -92,7 +92,7 @@ const Dashboard = () => {
               <button>Profile</button>
             </div>
             <div className="action-card" onClick={() => setActiveSection('refer')}>
-              <img src="refer.webp" alt="Refer & Earn" />
+              <img src="earn.png" alt="Refer & Earn" />
               <p>Refer & Earn</p>
               <button>Refer & Earn</button>
             </div>

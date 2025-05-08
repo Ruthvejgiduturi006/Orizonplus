@@ -234,11 +234,6 @@ const BrowseJobs = () => {
   
       // Replace content temporarily
       document.body.innerHTML = applicationLetter;
-    
-      // Redirect after 3 seconds
-      setTimeout(() => {
-        window.location.href = '/BrowseJobs'; // or full URL if needed
-      }, 3000);
   
     } catch (err) {
       console.error(err);
