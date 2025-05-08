@@ -189,7 +189,7 @@ const BrowseJobs = () => {
       }
   
       const providerId = selectedJob.userId || selectedJob.providerId;
-      const providerRes = await fetch(`https://orizonplus.onrender.com/api/users/${providerId}`);
+      const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvider/${selectedJob.providerId}`);
       const jobProvider = await providerRes.json();
   
       const applicationLetter = `
