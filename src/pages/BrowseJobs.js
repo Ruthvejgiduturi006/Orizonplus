@@ -215,7 +215,7 @@ const BrowseJobs = () => {
               <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
             </p>
             <p>This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
-            <p>Thank you for the opportunity.</p>
+            <p>Thank you for the Opportunity.</p>
   
             <p>
               Regards,<br>
