@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { jsPDF } from "jspdf";
 import L from 'leaflet';
 
 // Custom Pin Icon for the map marker
@@ -176,7 +177,11 @@ const BrowseJobs = () => {
     setSelectedJob({ ...job, userId });
     setModalOpen(true);
   };
-
+  const updateDashboardNotifications = (userId, message) => {
+    // Optional: Send this to your backend API if needed
+    console.log(`Notification for User ${userId}: ${message}`);
+  };
+  
   const handleSubmitApplication = async (userDetails) => {
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
