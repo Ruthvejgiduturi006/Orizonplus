@@ -16,17 +16,22 @@ const JobApplicationForm = ({ selectedJob }) => {
     e.preventDefault();
     try {
       const seeker = JSON.parse(localStorage.getItem('user'));
-      await axios.post('http://orizonplus.onrender.com/api/apply', {
+      if (!seeker || !selectedJob?._id) {
+        alert('Missing user or job details. Please try again.');
+        return;
+      }
+
+      await axios.post('https://orizonplus.onrender.com/api/apply', {
         jobId: selectedJob._id,
         providerId: selectedJob.userId,
-        seekerId: seeker?._id,
+        seekerId: seeker._id,
         userDetails,
       });
 
-      // Store job and provider details for confirmation page
+      // Store job and provider details for confirmation
       localStorage.setItem('selectedJob', JSON.stringify(selectedJob));
 
-      // Add notification for the dashboard
+      // Add notification for dashboard
       const notifications = JSON.parse(localStorage.getItem('notifications')) || [];
       notifications.push(`Applied for ${selectedJob.title}`);
       localStorage.setItem('notifications', JSON.stringify(notifications));
@@ -35,7 +40,11 @@ const JobApplicationForm = ({ selectedJob }) => {
       window.location.href = '/application-success.html';
     } catch (err) {
       console.error(err);
-      alert('Application failed. Try again.');
+      if (err.response && err.response.status === 400) {
+        alert(err.response.data.message || 'Already applied for this job.');
+      } else {
+        alert('Application failed. Please try again.');
+      }
     }
   };
 
