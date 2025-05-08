@@ -177,7 +177,7 @@ const BrowseJobs = () => {
     setModalOpen(true);
   };
 
-  const handleSubmitApplication = async (userDetails) => {
+  const handleSubmitApplication = async () => {
     try {
       // Retrieve the logged-in job seeker and selected job details
       const seeker = JSON.parse(localStorage.getItem('user'));
@@ -205,129 +205,55 @@ const BrowseJobs = () => {
       });
       localStorage.setItem('notifications', JSON.stringify(notifications));
   
-      // Generate the detailed application proof letter
+      // Generate the application confirmation letter
       const applicationLetter = `
-        <html>
-          <head>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                background-color: #f9f9f9;
-              }
-              .letter-container {
-                width: 700px;
-                background: #ffffff;
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                text-align: center;
-              }
-              .header {
-                font-size: 28px;
-                color: #007bff;
-                margin-bottom: 20px;
-              }
-              .logo {
-                max-width: 120px;
-                margin-bottom: 20px;
-              }
-              .content {
-                font-size: 18px;
-                color: #333;
-                line-height: 1.6;
-                text-align: left;
-                margin-top: 20px;
-              }
-              .section {
-                margin-top: 20px;
-                padding: 20px;
-                background-color: #e9f7fd;
-                border-radius: 8px;
-                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-              }
-              .section h3 {
-                color: #007bff;
-              }
-              .button-container {
-                margin-top: 30px;
-                display: flex;
-                justify-content: space-between;
-              }
-              .button {
-                flex: 1;
-                padding: 12px;
-                font-size: 18px;
-                color: white;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                margin: 5px;
-                text-align: center;
-              }
-              .back-button {
-                background-color: #007bff;
-              }
-              .print-button {
-                background-color: #28a745;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="letter-container">
-              <img src="your-logo-url-here" alt="Logo" class="logo" />
-              <h2 class="header">🎯 Job Application Confirmation</h2>
-              <div class="content">
-                <p><strong>Job Title:</strong> <span style="font-size: 22px; color: #000;">${selectedJob.jobTitle}</span></p>
-                <p><strong>Payment:</strong> ₹<span style="font-size: 22px; color: #000;">${selectedJob.payDetails}</span></p>
-                <p><strong>Job ID:</strong> <span style="font-size: 22px; color: #000;">${selectedJob._id || 'N/A'}</span></p>
-                <hr />
-                <p><strong>Job Seeker:</strong> <span style="font-size: 20px; font-weight: bold;">${seeker.name} (${seeker.phone})</span></p>
-                <p><strong>Job Provider:</strong> <span style="font-size: 20px; font-weight: bold;">${jobProvider.name || 'N/A'} (${jobProvider.phone || 'N/A'})</span></p>
-                <hr />
-                <p>This letter serves as an official confirmation that <strong>${seeker.name}</strong> has applied for the job "<strong>${selectedJob.jobTitle}</strong>" and agrees to the listed payment terms.</p>
-              </div>
-              
-              <div class="section">
-                <h3>Job Seeker Details</h3>
-                <p><strong>Name:</strong> ${seeker.name}</p>
-                <p><strong>Phone:</strong> ${seeker.phone}</p>
-                <p><strong>Email:</strong> ${seeker.email || 'N/A'}</p>
-                <p><strong>Skills/Experience:</strong> ${seeker.skills || 'N/A'}</p>
-              </div>
-  
-              <div class="section">
-                <h3>Job Provider Details</h3>
-                <p><strong>Name:</strong> ${jobProvider.name || 'N/A'}</p>
-                <p><strong>Phone:</strong> ${jobProvider.phone || 'N/A'}</p>
-                <p><strong>Company:</strong> ${jobProvider.company || 'N/A'}</p>
-                <p><strong>Location:</strong> ${jobProvider.location || 'N/A'}</p>
-              </div>
-  
-              <div class="button-container">
-                <button class="button back-button" onclick="window.location.href='/dashboard'">← Back to Dashboard</button>
-                <button class="button print-button" onclick="window.print()">🖨 Print Proof</button>
-              </div>
-            </div>
-          </body>
-        </html>
+        <div style="padding: 20px; font-family: Arial, sans-serif; max-width: 700px; margin: auto; background: #f9f9f9; border-radius: 10px;">
+          <h2 style="text-align: center; color: #007bff;">🎯 Job Application Confirmation</h2>
+          <p><strong>Job Title:</strong> ${selectedJob.jobTitle}</p>
+          <p><strong>Payment:</strong> ₹${selectedJob.payDetails}</p>
+          <p><strong>Job ID:</strong> ${selectedJob._id || 'N/A'}</p>
+          <hr />
+          <p><strong>Job Seeker:</strong> ${seeker.name} (${seeker.phone})</p>
+          <p><strong>Job Provider:</strong> ${jobProvider.name || 'N/A'} (${jobProvider.phone || 'N/A'})</p>
+          <hr />
+          <p>This letter serves as an official confirmation that <strong>${seeker.name}</strong> has applied for the job "<strong>${selectedJob.jobTitle}</strong>" and agrees to the listed payment terms.</p>
+          <div style="margin-top: 30px; display: flex; gap: 10px;">
+            <button onclick="window.location.href='https://orizonplus.netlify.app/BrowseJobs'" style="flex: 1; background: #007bff; color: white; border: none; padding: 10px; border-radius: 5px;">← Back to Jobs</button>
+            <button onclick="window.print()" style="flex: 1; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px;">🖨 Print Proof</button>
+          </div>
+        </div>
       `;
   
       // Replace the page content with the application proof letter
       document.body.innerHTML = applicationLetter;
   
+      // Show Success Popup
+      showSuccessPopup();
+  
     } catch (err) {
       console.error(err);
       alert("Application failed. Please try again.");
     }
+  };
+  
+  // Function to show the "Successfully Applied" popup
+  const showSuccessPopup = () => {
+    const popup = document.createElement('div');
+    popup.id = 'success-popup';
+    popup.innerHTML = `
+      <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background: #4CAF50; color: white; border-radius: 10px; font-size: 16px; text-align: center; z-index: 9999;">
+        <strong>Success!</strong> You have successfully applied for the job.
+      </div>
+    `;
+    document.body.appendChild(popup);
+  
+    // Remove the popup after 3 seconds
+    setTimeout(() => {
+      popup.remove();
+    }, 3000); // 3 seconds delay
   };  
   
-
+  
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
