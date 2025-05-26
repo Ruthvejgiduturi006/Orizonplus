@@ -2,22 +2,36 @@ import { useState, useEffect } from 'react';
 
 const ApplyJobComponent = ({ selectedJob }) => {
   const [showLetter, setShowLetter] = useState(false);
+  const [jobProviderDetails, setJobProviderDetails] = useState(null);
   const seeker = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    // Check if 'seeker' is in localStorage, fallback if not
     if (!seeker) {
       alert('User details are missing. Please log in again.');
-      // Optionally, redirect to login page
+      return;
     }
-  }, []);
+
+    // Fetch job provider details using selectedJob.userId
+    const fetchJobProviderDetails = async () => {
+      try {
+        const response = await fetch(`/api/users/${selectedJob.userId}`);
+        if (!response.ok) throw new Error('Failed to fetch provider details');
+        const data = await response.json();
+        setJobProviderDetails(data);
+      } catch (error) {
+        console.error('Error fetching job provider details:', error);
+      }
+    };
+
+    if (selectedJob?.userId) {
+      fetchJobProviderDetails();
+    }
+  }, [selectedJob, seeker]);
 
   const handleSubmitApplication = () => {
     try {
-      // Store job details in localStorage
       localStorage.setItem('selectedJob', JSON.stringify(selectedJob));
 
-      // Simulate notification (you can use actual notification system)
       const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
       notifications.push({
         type: 'application',
@@ -28,28 +42,30 @@ const ApplyJobComponent = ({ selectedJob }) => {
       localStorage.setItem('notifications', JSON.stringify(notifications));
 
       alert('Application sent successfully!');
-      setShowLetter(true); // Display the letter in the same page
+      setShowLetter(true);
     } catch (err) {
       console.error(err);
       alert('Application failed. Try again.');
     }
   };
 
-  // Provide fallback values if data is missing in selectedJob
+  // Job and provider fallback info
   const jobTitle = selectedJob?.title || "Job Title not available";
   const payment = selectedJob?.payment || "Not specified";
-  const providerName = selectedJob?.providerName || "Not Available";
   const jobLocation = selectedJob?.location || "Not Available";
   const jobShift = selectedJob?.shift || "Not Available";
   const jobDescription = selectedJob?.description || "Not Available";
   const jobLastDate = selectedJob?.lastDate || "Not Available";
 
+  const providerName = jobProviderDetails?.name || "Not Available";
+  const providerEmail = jobProviderDetails?.email || "Not Available";
+  const providerPhone = jobProviderDetails?.phone || "Not Available";
+  const providerLocation = jobProviderDetails?.location || "Not Available";
+
   return (
     <div>
-      {/* Application Form */}
       <button onClick={handleSubmitApplication}>Submit Application</button>
 
-      {/* Show PDF-style letter after submission */}
       {showLetter && (
         <div className="glass-card dashboard-card" style={{ marginTop: '2rem' }}>
           <div className="dashboard-header">
@@ -79,7 +95,7 @@ const ApplyJobComponent = ({ selectedJob }) => {
             <p>
               This letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.
             </p>
-            <p>thank you for the opportunity.</p>
+            <p>Thank you for the opportunity.</p>
 
             <p>
               Regards,<br />
@@ -101,9 +117,9 @@ const ApplyJobComponent = ({ selectedJob }) => {
             <h3>Job Provider Details:</h3>
             <ul>
               <li><strong>Name:</strong> {providerName}</li>
-              <li><strong>Email:</strong> {selectedJob?.providerEmail || 'Not Available'}</li>
-              <li><strong>Phone:</strong> {selectedJob?.providerPhone || 'Not Available'}</li>
-              <li><strong>Location:</strong> {selectedJob?.providerLocation || 'Not Available'}</li>
+              <li><strong>Email:</strong> {providerEmail}</li>
+              <li><strong>Phone:</strong> {providerPhone}</li>
+              <li><strong>Location:</strong> {providerLocation}</li>
             </ul>
 
             <h3>Job Seeker Details:</h3>
