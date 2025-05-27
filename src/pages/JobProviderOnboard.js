@@ -74,7 +74,7 @@ const JobProviderOnboard = () => {
 <input
   className="reveal"
   type="text"
-  name="name"
+  name="providername"
   placeholder="e.g. John Doe or XYZ Company"
   onChange={handleChange}
   required
