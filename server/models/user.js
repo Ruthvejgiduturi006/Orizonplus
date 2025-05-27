@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
 
   // Job Provider details
   jobProviderProfile: {
+    providername:{type: String},
     jobTitle: { type: String },
     jobType: { type: String },
     location: { type: String },

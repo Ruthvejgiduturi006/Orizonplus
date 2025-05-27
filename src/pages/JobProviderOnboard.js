@@ -7,6 +7,7 @@ const JobProviderOnboard = () => {
     const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    providername: '',
     jobTitle: '',
     jobType: '',
     location: '',
@@ -69,6 +70,15 @@ const JobProviderOnboard = () => {
 
   <form className="glass-card" onSubmit={handleSubmit}>
     <h2 className="reveal">Post a Job</h2>
+     <label className="reveal">Name</label>
+<input
+  className="reveal"
+  type="text"
+  name="name"
+  placeholder="e.g. John Doe or XYZ Company"
+  onChange={handleChange}
+  required
+/>
 
     <label className="reveal">Job Title</label>
     <input

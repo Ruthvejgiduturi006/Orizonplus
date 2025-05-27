@@ -222,16 +222,16 @@ const BrowseJobs = () => {
     
           <div style="margin-top: 20px;">
             <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-            <p><strong>To:</strong> ${jobProvider.name || 'N/A'} (Job Provider)</p>
+            <p><strong>To:</strong> ${jobProvider.providername || 'N/A'} (Job Provider)</p>
             <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
     
-            <p>Dear ${jobProvider.name || 'Sir/Madam'},</p>
+            <p>Dear ${jobProvider.providername || 'Sir/Madam'},</p>
             <p>
               I, <strong>${seeker.name}</strong>, am applying for the part-time job titled <strong>“${selectedJob.jobTitle}”</strong>.
               I agree to the fixed payment of <strong>${selectedJob.payDetails || 'N/A'}</strong> for the entire task, without any scope for negotiation or bargaining.
             </p>
             <p>
-              The job is provided by <strong>${jobProvider.name}</strong>, who can be contacted at
+              The job is provided by <strong>${jobProvider.providername}</strong>, who can be contacted at
               <strong>${jobProvider.contact || 'N/A'}</strong> and is located in
               <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
             </p>
