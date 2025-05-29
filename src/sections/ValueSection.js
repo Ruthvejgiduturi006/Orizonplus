@@ -1,6 +1,11 @@
+import React from 'react';
 import { Box, Container, Grid, Typography, Button, Card, CardContent } from '@mui/material';
 import { motion } from 'framer-motion';
-import { UserPlus, Search, CalendarCheck, CheckCircle, UploadCloud, Filter, ClipboardCheck, BadgeCheck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import {
+  UserPlus, Search, CalendarCheck, CheckCircle,
+  UploadCloud, Filter, ClipboardCheck, BadgeCheck
+} from 'lucide-react';
 
 const commonCardStyles = {
   height: '100%',
@@ -15,7 +20,7 @@ const commonContentStyles = {
 
 const seekerSteps = [
   {
-    icon: <UserPlus size={32} color="#00CFFF" />, 
+    icon: <UserPlus size={32} color="#00CFFF" />,
     title: 'Create Your Profile',
     description: 'Sign up and build your profile showcasing your skills and availability.'
   },
@@ -38,7 +43,7 @@ const seekerSteps = [
 
 const providerSteps = [
   {
-    icon: <UploadCloud size={32} color="#00CFFF" />, 
+    icon: <UploadCloud size={32} color="#00CFFF" />,
     title: 'Post a Job',
     description: 'Easily list the jobs you need help with, specifying requirements and schedule.'
   },
@@ -91,9 +96,16 @@ const SectionBlock = ({ title, steps }) => (
 );
 
 export default function JourneySection() {
+  const navigate = useNavigate();
+
   return (
-    <Box sx={{ pt: 6, pb: 4 , background: 'linear-gradient(rgba(103, 204, 235, 0.9), rgba(211, 218, 240, 0.9)), url("/public/logo.png") center/cover no-repeat',
-    }}>
+    <Box
+      sx={{
+        pt: 6,
+        pb: 4,
+        background: 'linear-gradient(rgba(103, 204, 235, 0.9), rgba(211, 218, 240, 0.9)), url("/public/logo.png") center/cover no-repeat',
+      }}
+    >
       <Container maxWidth="lg">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -115,13 +127,30 @@ export default function JourneySection() {
               Ready to Start?
             </Typography>
             <Typography variant="h6" sx={{ fontWeight: 700, color: '#001C55', mb: 2 }}>
-              Choose Want You Want
+              Choose What You Want
             </Typography>
-            <Button variant="contained" sx={{ bgcolor: '#0E6BA8', mr: 2, color: '#fff', '&:hover': { bgcolor: '#0A2472' } }}>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: '#0E6BA8',
+                mr: 2,
+                color: '#fff',
+                '&:hover': { bgcolor: '#0A2472' }
+              }}
+              onClick={() => navigate('/signup')}
+            >
               Create Your Account
             </Button>
-            <Button variant="outlined" sx={{ borderColor: '#0E6BA8', color: '#0E6BA8', '&:hover': { bgcolor: '#A6E1FA', borderColor: '#0E6BA8' } }}>
-              Browse Jobs
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: '#0E6BA8',
+                color: '#0E6BA8',
+                '&:hover': { bgcolor: '#A6E1FA', borderColor: '#0E6BA8' }
+              }}
+              onClick={() => navigate('/Login')}
+            >
+              Log in
             </Button>
           </Box>
         </motion.div>

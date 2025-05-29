@@ -1,0 +1,139 @@
+/* Root Container */
+
+.about-container {
+  padding: 60px 30px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #0077c8;
+  line-height: 1.8;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Hero Section */
+.about-hero {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  color: #0052cc;
+  margin-bottom: 10px;
+}
+
+.about-hero p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Section Styling */
+.about-section {
+  margin-bottom: 50px;
+}
+
+.about-section h2 {
+  font-size: 1.8rem;
+  color: #003366;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.about-section h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #4a90e2;
+  border-radius: 2px;
+  margin-top: 8px;
+}
+
+.about-section p {
+  font-size: 1.05rem;
+  color: #444;
+}
+
+/* List with Icons */
+.about-section ul {
+  padding-left: 0;
+  list-style: none;
+  margin-top: 15px;
+}
+
+.about-section ul li {
+  padding-left: 28px;
+  margin-bottom: 12px;
+  position: relative;
+  font-size: 1.05rem;
+  color: #333;
+}
+
+.about-section ul li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Call-to-Action Box */
+.about-cta {
+  background: #e6f0ff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.about-cta h3 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  color: #00264d;
+}
+
+.about-cta p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .about-container {
+    padding: 30px 20px;
+  }
+
+  .about-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-cta h3 {
+    font-size: 1.4rem;
+  }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.blue-circle {
+  top: -100px;
+  left: -100px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle at center, #1e88e5, #0d47a1); /* Blue gradient */
+}
+
+.orange-circle {
+  bottom: -100px;
+  right: -100px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle at center, #ffb74d, #f57c00); /* Orange gradient */
+}
