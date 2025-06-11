@@ -1,6 +1,7 @@
-import { Box, Button, Container, Typography, Grid } from '@mui/material';
-import { Facebook, Twitter, Instagram, LinkedIn, LocationOn, Phone, Email } from '@mui/icons-material';
+import { Box, Button, Container, Typography, Grid , Link as MuiLink  } from '@mui/material';
 import { motion } from 'framer-motion';
+import { Facebook, Twitter, Instagram, LinkedIn, LocationOn, Phone, Email } from '@mui/icons-material';
+import { Link } from 'react-router-dom'; // if you're using react-router
 
 export default function ProcessSection() {
   return (
@@ -61,66 +62,65 @@ export default function ProcessSection() {
       </Box>
 
       {/* Footer Section */}
-      <Box sx={{ backgroundColor: '#1c2834', color: 'white', py: 8 }}>
-        <Container>
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={3}>
-              <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 'bold' }}>Orizon+</Typography>
-              <Typography variant="body2" sx={{ mt: 2 }}>
-                Connecting people with opportunities, revolutionizing the way we work and hire.
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-                <Facebook />
-                <Twitter />
-                <Instagram />
-                <LinkedIn />
-              </Box>
-            </Grid>
-
-            <Grid item xs={12} md={3}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Quick Links</Typography>
-              <Typography variant="body2" sx={{ mt: 1 }}>Home</Typography>
-              <Typography variant="body2">Browse Jobs</Typography>
-              <Typography variant="body2">Post a Job</Typography>
-              <Typography variant="body2">About Us</Typography>
-              <Typography variant="body2">Contact</Typography>
-            </Grid>
-
-            <Grid item xs={12} md={3}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>For Job Seekers</Typography>
-              <Typography variant="body2" sx={{ mt: 1 }}>Find Jobs</Typography>
-              <Typography variant="body2">Create Profile</Typography>
-              <Typography variant="body2">Job Alerts</Typography>
-              <Typography variant="body2">Resources</Typography>
-            </Grid>
-
-            <Grid item xs={12} md={3}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Contact Us</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                <LocationOn sx={{ mr: 1 }} />
-                <Typography variant="body2">123 Innovation Street, Tech City, TC 12345</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                <Phone sx={{ mr: 1 }} />
-                <Typography variant="body2">+1 (555) 123-4567</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
-                <Email sx={{ mr: 1 }} />
-                <Typography variant="body2">contact@orizonplus.com</Typography>
-              </Box>
-            </Grid>
+      <Container>
+        <Grid container spacing={4}>
+          {/* Orizon+ Info */}
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#007acc' }}>
+              Orizon+
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 2 }}>
+              Connecting people with opportunities — revolutionizing how we work and hire.
+            </Typography>
           </Grid>
 
-          <Box sx={{ borderTop: '1px solid #444', mt: 4, pt: 2, textAlign: 'center' }}>
-            <Typography variant="body2">© 2025 Orizon+. All rights reserved.</Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mt: 1 }}>
-              <Typography variant="body2">Terms of Service</Typography>
-              <Typography variant="body2">Privacy Policy</Typography>
-              <Typography variant="body2">Cookie Policy</Typography>
+          {/* Contact Info */}
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#007acc' }}>
+              Contact Us
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+              <LocationOn sx={{ mr: 1 }} />
+              <Typography variant="body2">
+                CMR College of Engineering and Technology, Hyderabad
+              </Typography>
             </Box>
-          </Box>
-        </Container>
-      </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+              <Email sx={{ mr: 1 }} />
+              <Typography variant="body2">contact@orizonplus.site</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+              <Email sx={{ mr: 1 }} />
+              <Typography variant="body2">help@orizonplus.site</Typography>
+            </Box>
+          </Grid>
+
+          {/* Legal Links */}
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#007acc' }}>
+              Legal
+            </Typography>
+            <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <MuiLink component={Link} to="/terms" color="inherit" underline="hover">
+                Terms of Service
+              </MuiLink>
+              <MuiLink component={Link} to="/privacy" color="inherit" underline="hover">
+                Privacy Policy
+              </MuiLink>
+              <MuiLink component={Link} to="/cookies" color="inherit" underline="hover">
+                Cookie Policy
+              </MuiLink>
+            </Box>
+          </Grid>
+        </Grid>
+
+        {/* Bottom Note */}
+        <Box sx={{ borderTop: '1px solid #b3d7f2', mt: 4, pt: 2, textAlign: 'center' }}>
+          <Typography variant="body2" sx={{ color: '#1a3d5c' }}>
+            © 2025 Orizon+. All rights reserved.
+          </Typography>
+        </Box>
+      </Container>
     </Box>
   );
 }

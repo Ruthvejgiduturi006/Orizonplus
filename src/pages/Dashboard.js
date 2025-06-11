@@ -72,7 +72,7 @@ const Dashboard = () => {
         return (
           <div className="main-cards">
             <div className="action-card" onClick={() => navigate('/jobseeker-onboard')}>
-              <img src="work.png" alt="Onboarding" />
+              <img src="on.webp" alt="Onboarding" />
               <p>Job Seeker Onboarding</p>
               <button>Onboarding</button>
             </div>
@@ -92,7 +92,7 @@ const Dashboard = () => {
               <button>Profile</button>
             </div>
             <div className="action-card" onClick={() => setActiveSection('refer')}>
-              <img src="earn.png" alt="Refer & Earn" />
+              <img src="earnn.jpg" alt="Refer & Earn" />
               <p>Refer & Earn</p>
               <button>Refer & Earn</button>
             </div>
@@ -169,7 +169,45 @@ const Dashboard = () => {
         return <div className="content">My Posted Jobs</div>;
 
       case 'help':
-        return <div className="content">Help & Support</div>;
+  return (
+    <div className="content px-4 py-6 max-w-xl mx-auto text-gray-800">
+      <h2 className="text-2xl font-bold mb-4 text-primary">Help & Support</h2>
+      
+      <p className="mb-3">
+        Welcome to <strong>OrizonPlus Support</strong>.
+      </p>
+
+      <p className="mb-3">
+        Having trouble signing in, posting a job, or applying for one? Just reach out — we’re happy to help!
+      </p>
+
+      <p className="mb-2">
+        🧑‍💼 <strong>For Job Seekers:</strong>  
+        <br />
+        Email us at <a href="mailto:support-seeker@orizonplus.site" className="text-blue-600 underline">support-seeker@orizonplus.site</a>
+        <br />
+        For questions related to profiles, applications, and job alerts.
+      </p>
+
+      <p className="mb-2">
+        🧑‍💻 <strong>For Job Providers:</strong>  
+        <br />
+        Email us at <a href="mailto:support-provider@orizonplus.site" className="text-blue-600 underline">support-provider@orizonplus.site</a>
+        <br />
+        For help with job posting, managing applicants, or verification.
+      </p>
+
+      <p className="mt-4">
+        💬 For general inquiries or technical issues, contact us at:  
+        <br />
+        <a href="mailto:help@orizonplus.site" className="text-blue-600 underline">help@orizonplus.site</a>
+      </p>
+
+      <p className="mt-4 text-sm text-gray-500">
+        We usually respond within 24 hours. For urgent support, mention "URGENT" in your email subject.
+      </p>
+    </div>
+  );
 
       case 'reviews':
         const sampleReviews = [
