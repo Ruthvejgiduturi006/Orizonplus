@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography, Grid , Link as MuiLink  } from '@mui/material';
 import { motion } from 'framer-motion';
-import { Facebook, Twitter, Instagram, LinkedIn, LocationOn, Phone, Email } from '@mui/icons-material';
+import { LocationOn, Email } from '@mui/icons-material';
 import { Link } from 'react-router-dom'; // if you're using react-router
 
 export default function ProcessSection() {
