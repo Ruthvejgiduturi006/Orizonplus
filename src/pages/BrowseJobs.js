@@ -192,18 +192,14 @@ const BrowseJobs = () => {
         alert("Invalid or missing job selection.");
         return;
       }
-    await fetch('https://orizonplus.onrender.com/api/messages', {
+      // Send message to job provider
+await fetch('https://orizonplus.onrender.com/api/messages', {
   method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    to: selectedJob.userId, // ✅ Job provider's user ID
-    from: seeker._id,       // ✅ Job seeker's user ID
-    title: `New Application: ${selectedJob.jobTitle}`,
-    content: `You have received a new application from ${seeker.name}.`,
-    timestamp: new Date(),
-    read: false
+    toUserId: selectedJob.userId,
+    title: `📥 New Job Application: ${selectedJob.jobTitle}`,
+    content: `${seeker.name} has applied to your job "${selectedJob.jobTitle}". Contact: ${seeker.phone}`,
   }),
 });
 
