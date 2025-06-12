@@ -48,7 +48,7 @@ const Login = () => {
             <label>Password</label>
             <input
               type="password"
-              placeholder="Enter 6 characters or more"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -63,12 +63,6 @@ const Login = () => {
 
             <button type="submit" className="login-btn">LOGIN</button>
 
-            <div className="divider">or login with</div>
-
-            <div className="social-login">
-              <button type="button" className="google-btn">Google</button>
-              <button type="button" className="facebook-btn">Facebook</button>
-            </div>
           </form>
         </div>
 
