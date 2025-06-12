@@ -7,9 +7,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('home');
   const [profileData, setProfileData] = useState({});
-  const [notifications, setNotifications] = useState([]);
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [messages] = useState([]);
+  const [messages, setMessages] = useState([]);
+const [notifications, setNotifications] = useState([]);
+const [unreadCount, setUnreadCount] = useState(0);
+
 
 
   // Get user info from localStorage
@@ -31,11 +32,29 @@ const Dashboard = () => {
   }, []); // Empty dependency array ensures this runs only once, after the first render.
   // Fetch notifications from localStorage
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('notifications') || '[]');
-    setNotifications(stored);
-    const unread = stored.filter(msg => !msg.read).length;
-    setUnreadCount(unread);
-  }, []);
+  const stored = JSON.parse(localStorage.getItem('notifications') || '[]');
+  setNotifications(stored);
+  const unread = stored.filter(msg => !msg.read).length;
+  setUnreadCount(unread);
+}, []);
+
+useEffect(() => {
+  const fetchMessages = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      if (user && user._id) {
+        const res = await fetch(`https://orizonplus.onrender.com/api/messages/${user._id}`);
+        const data = await res.json();
+        setMessages(data);
+      }
+    } catch (error) {
+      console.error("Error fetching messages:", error);
+    }
+  };
+
+  fetchMessages();
+}, []);
+
   const handleClickMessages = () => {
     setActiveSection('messages');
     // Optionally mark all as read:
