@@ -12,6 +12,7 @@ import JobSeekerOnboard from './pages/JobSeekerOnboard';
 import JobProviderOnboard from './pages/JobProviderOnboard';
 import BrowseJobs from './pages/BrowseJobs';
 import About from './pages/about';
+import Browsejobmap from './pages/browsejobmap'; // import the new component
 
 export default function App() {
   const [translateVisible, setTranslateVisible] = useState(false);
@@ -110,6 +111,7 @@ export default function App() {
           <Route path="/jobprovider-onboard" element={<JobProviderOnboard />} />
           <Route path="/BrowseJobs" element={<BrowseJobs />} />
           <Route path='/about' element={<About/>}/>
+          <Route path="/browsejobmap" element={<Browsejobmap />} /> {/* new route */}
         </Routes>
 
         {/* CSS to completely hide Google Translate top bar */}

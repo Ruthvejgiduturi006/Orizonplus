@@ -192,6 +192,16 @@ const BrowseJobs = () => {
         alert("Invalid or missing job selection.");
         return;
       }
+      // Send message to job provider
+await fetch('https://orizonplus.onrender.com/api/messages', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    toUserId: selectedJob.userId,
+    title: `📥 New Job Application: ${selectedJob.jobTitle}`,
+    content: `${seeker.name} has applied to your job "${selectedJob.jobTitle}". Contact: ${seeker.phone}`,
+  }),
+});
   
       // Fetch job provider details
       const providerRes = await fetch(`https://orizonplus.onrender.com/api/jobProvide/${selectedJob.userId}`);
@@ -203,55 +213,64 @@ const BrowseJobs = () => {
       const jobProvider = await providerRes.json();
   
       // Prepare the application letter
-      const applicationLetter = `
-      <div style="position: relative; min-height: 100vh; background: linear-gradient(135deg, #4982eb 25%, #fff 75%); font-family: 'Segoe UI', sans-serif;">
-        <!-- Decorative Circles -->
-        <div style="position: absolute; top: -60px; left: -60px; width: 200px; height: 200px; background: #4db8ff; border-radius: 50%; opacity: 0.3;"></div>
-        <div style="position: absolute; bottom: -40px; right: -40px; width: 150px; height: 150px; background: #f8a531; border-radius: 50%; opacity: 0.3;"></div>
-    
-        <!-- Back to Dashboard Link -->
-        <a href="/dashboard" style="position: absolute; top: 20px; left: 20px; text-decoration: none; font-weight: bold; color: #333;">← Back to Dashboard</a>
-    
-        <!-- Application Letter Card -->
-        <div style="padding: 20px; background: white; border-radius: 15px; max-width: 750px; margin: 100px auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-          <img src="https://orizonplus.onrender.com/logo.png" alt="Orizon+" style="display: block; margin: 0 auto 20px; max-height: 60px;" />
-          <h2 style="text-align: center; color: #333;">🎉 Application Submitted</h2>
-          <p style="text-align: center; font-size: 14px; color: #666;">
-            This is a fixed price job. No bargaining is allowed. Below is your proof letter.
-          </p>
-    
-          <div style="margin-top: 20px;">
-            <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-            <p><strong>To:</strong> ${jobProvider.providername || 'N/A'} (Job Provider)</p>
-            <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
-    
-            <p>Dear ${jobProvider.providername || 'Sir/Madam'},</p>
-            <p>
-              I, <strong>${seeker.name}</strong>, am applying for the part-time job titled <strong>“${selectedJob.jobTitle}”</strong>.
-              I agree to the fixed payment of <strong>${selectedJob.payDetails || 'N/A'}</strong> for the entire task, without any scope for negotiation or bargaining.
-            </p>
-            <p>
-              The job is provided by <strong>${jobProvider.providername}</strong>, who can be contacted at
-              <strong>${jobProvider.contact || 'N/A'}</strong> and is located in
-              <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
-            </p>
-            <p>This Letter acts as an official confirmation of acceptance. Upon successful completion of the task, I expect timely payment.</p>
-            <p>Thank you for the opportunity.</p>
-    
-            <p>
-              Regards,<br>
-              <strong>${seeker.name}</strong><br>
-              Phone: ${seeker.phone}<br>
-              Location: ${seeker.address || 'N/A'}
-            </p>
-          </div>
-    
-          <div style="display: flex; justify-content: center; margin-top: 30px;">
-            <button onclick="window.print()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 16px;">🖨 Print Proof</button>
-          </div>
-        </div>
+     const applicationLetter = `
+  <div style="position: relative; min-height: 100vh; background: linear-gradient(135deg, #98bbfb, #dbe8fc); font-family: 'Segoe UI', sans-serif; padding-top: 40px;">
+
+    <!-- Back to Dashboard Link -->
+    <a href="/dashboard" style="position: absolute; top: 20px; left: 20px; text-decoration: none; font-weight: bold; color: #333;">← Back to Dashboard</a>
+
+    <!-- Application Letter Card -->
+    <div style="padding: 20px; background: white; border-radius: 15px; max-width: 750px; margin: 0 auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      <img src="logo.png" alt="Orizon+" style="display: block; margin: 0 auto 20px; max-height: 60px;" />
+      <h2 style="text-align: center; color: #333;">📄 Application Confirmation Letter</h2>
+      <p style="text-align: center; font-size: 14px; color: #666;">
+        This is a formal proof of your application for the job. Please read the terms carefully. This is a <strong>fixed-rate</strong> job with <strong>no negotiations</strong> or <strong>advance payments</strong> allowed.
+      </p>
+
+      <div style="margin-top: 20px;">
+        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+        <p><strong>To:</strong> ${jobProvider.providername || 'N/A'} (Job Provider)</p>
+        <p><strong>From:</strong> ${seeker.name} (Job Seeker)</p>
+
+        <p>Dear ${jobProvider.providername || 'Sir/Madam'},</p>
+        <p>
+          I, <strong>${seeker.name}</strong>, am formally applying for the part-time job titled <strong>“${selectedJob.jobTitle}”</strong>. I hereby agree to the fixed compensation of 
+          <strong>${selectedJob.payDetails || 'N/A'}</strong> as listed in the job description.
+        </p>
+        <p>
+          I understand and accept the following conditions:
+          <ul style="margin-left: 20px; font-size: 14px;">
+            <li>🔒 This is a fixed-price job — <strong>no bargaining or negotiation</strong> is allowed before or after acceptance.</li>
+            <li>💸 <strong>No advance or upfront payments</strong> will be demanded by me, the job seeker.</li>
+            <li>🚫 I will <strong>not lend or transfer</strong> any money or resources to the job provider under any circumstances.</li>
+            <li>⏳ Payment will be expected <strong>only upon successful and complete delivery</strong> of the task.</li>
+          </ul>
+        </p>
+        <p>
+          The job is offered by <strong>${jobProvider.providername}</strong>, who can be contacted at 
+          <strong>${jobProvider.contact || 'N/A'}</strong> and is located in 
+          <strong>${jobProvider.address || jobProvider.location || 'N/A'}</strong>.
+        </p>
+        <p>
+          This letter serves as an official proof of mutual agreement to the above terms. I will fulfill the job responsibilities with sincerity and expect timely payment upon completion.
+        </p>
+        <p>Thank you for this opportunity.</p>
+
+        <p>
+          Regards,<br>
+          <strong>${seeker.name}</strong><br>
+          Phone: ${seeker.phone}<br>
+          Location: ${seeker.address || 'N/A'}
+        </p>
       </div>
-    `;    
+
+      <div style="display: flex; justify-content: center; margin-top: 30px;">
+        <button onclick="window.print()" style="background: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 16px;">🖨 Print Proof</button>
+      </div>
+    </div>
+  </div>
+`;
+
   
       // Show the letter and redirect after 3 seconds
       document.body.innerHTML = applicationLetter;
