@@ -1,70 +1,150 @@
-# Getting Started with Create React App
+Orizon+ – Job Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🌐 [www.orizonplus.site](http://www.orizonplus.site)
 
-## Available Scripts
+Orizon+ is a modern job platform that connects job seekers and job providers for short-term, part-time, and freelance opportunities. The platform uses geolocation-based job discovery, a first-come-first-serve model, and an AI-ready design for a seamless user experience.
 
-In the project directory, you can run:
+---
+<img width="1903" height="864" alt="image" src="https://github.com/user-attachments/assets/7be1592f-637b-4fc4-9578-f98e16824e87" />
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### For Job Seekers
 
-### `npm test`
+* 🔑 Secure signup & login
+* 📍 Geolocation-based job discovery
+* 📋 Apply to jobs instantly (first-come-first-serve model)
+* 👤 Profile management (skills, preferences, address, phone)
+* 📲 Responsive dashboard for mobile and desktop
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### For Job Providers
 
-### `npm run build`
+* 🔑 Secure signup & login
+* 📝 Post jobs with details & requirements
+* 📍 Location-based targeting of job seekers
+* 👤 Profile management with company details
+* 📊 Manage applicants via provider dashboard
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Common Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Modern and responsive UI/UX
+* Dynamic job listings inspired by **Freelancer, Naukri, Internshala**
+* Notification system for job postings & applications
+* Role selection (Job Provider or Job Seeker) after login
+* AI-ready system for **future recommendation features**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🛠️ Tech Stack
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Frontend (React – `client/`)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* React.js (with .js components)
+* Tailwind CSS for styling
+* React Router for navigation
+* LocalStorage for token & user details
+* Responsive layouts for desktop & mobile
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Backend (Node.js/Express – `server/`)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* Node.js with Express.js
+* MongoDB with Mongoose for user & job data
+* JWT authentication for signup/login
+* REST API endpoints for jobs, users, and authentication
 
-## Learn More
+### Database
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* **MongoDB Atlas** (cloud-hosted)
+* Unified **users collection** for seekers & providers
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Hosting
 
-### Code Splitting
+* Frontend: Vercel / Netlify (or current domain hosting)
+* Backend: Node.js server hosted on cloud (e.g., Render, AWS, or custom server)
+* Database: MongoDB Atlas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 📂 Folder Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+orizonplus/
+│
+├── client/               # React frontend
+│   ├── src/
+│   │   ├── pages/        # Pages (Login, Signup, BrowseJobs, Dashboard, etc.)
+│   │   ├── components/   # UI components
+│   │   ├── services/     # API calls
+│   │   └── App.js
+│   └── package.json
+│
+├── server/               # Express + MongoDB backend
+│   ├── routes/           # Auth, User, Job routes
+│   ├── models/           # Mongoose models (User, Job)
+│   ├── middleware/       # Auth middlewares
+│   └── server.js
+│
+└── README.md
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## ⚙️ Installation & Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Prerequisites
 
-### Deployment
+* Node.js (>= 16)
+* MongoDB Atlas account (or local MongoDB)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Backend Setup (`server/`)
 
-### `npm run build` fails to minify
+```bash
+cd server
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Frontend Setup (`client/`)
+
+```bash
+cd client
+npm install
+npm start
+```
+
+The app will run on:
+
+* Frontend → `http://localhost:3000`
+* Backend → `http://localhost:5000`
+
+---
+
+## 🔐 Authentication Workflow
+
+1. User signs up (Job Seeker / Job Provider).
+2. JWT Token & user details are stored in **localStorage**.
+3. After login, user chooses **role** (seeker/provider).
+4. Role-specific dashboard is displayed.
+
+---
+
+## 🌟 Future Enhancements
+
+* AI/ML job recommendations based on seeker profile
+* Multi-language voice assistance for illiterate users
+* Video resume/job application support
+* Blockchain for secure work contracts & payments
+* Integration with WhatsApp/SMS notifications
+
+---
+
+## 👥 Contributors
+
+* Ruthvej Giduturi (Project Lead)
+* Orizon+ Team
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** – free to use, modify, and distribute.
